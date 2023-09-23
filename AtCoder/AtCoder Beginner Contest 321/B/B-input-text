@@ -1,0 +1,54 @@
+Implement a C++ code that solves the following question:
+Time Limit: 2 sec / Memory Limit: 1024 MB
+
+Score : 
+200 points
+
+Problem Statement
+There is an exam structured as follows.
+
+The exam consists of N rounds called round 1 to N.
+In each round, you are given an integer score between 0 and 100, inclusive.
+Your final grade is the sum of the N−2 of the scores earned in the rounds excluding the highest and lowest.
+Formally, let S=(S1 ,S2​ ,…,SN ) be the sequence of the scores earned in the rounds sorted in ascending order, then the final grade is S2 + S3 +⋯+SN−1.
+Now, N−1 rounds of the exam have ended, and your score in round i was Ai.
+Print the minimum score you must earn in round N for a final grade of X or higher.
+If your final grade will never be X or higher no matter what score you earn in round N, print -1 instead.
+Note that your score in round N can only be an integer between 0 and 100.
+
+Constraints
+All input values are integers.
+3≤N≤100 
+0≤X≤100×(N−2)
+0≤Ai ≤100
+Input
+The input is given from Standard Input in the following format:
+N X
+A1 A2 ... AN−1
+​
+Output
+Print the answer.
+
+Sample Input 1
+5 180
+40 60 80 50
+Sample Output 1
+70
+
+Sample Input 2
+3 100
+100 100
+Sample Output 2
+0
+
+Sample Input 3
+5 200
+0 0 99 99
+Sample Output 3
+-1
+
+Sample Input 4
+10 480
+59 98 88 54 70 24 8 94 46
+Sample Output 4
+45
