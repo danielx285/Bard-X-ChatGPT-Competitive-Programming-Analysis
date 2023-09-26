@@ -1,0 +1,103 @@
+Implement a C++ code that solves the following question:
+
+time limit per test 1 second
+memory limit per test 256 megabytes
+inputstandard input
+outputstandard output
+
+You are given a string s of length n, containing lowercase Latin letters.
+
+Next you will be given a positive integer k and two arrays, l and r of length k.
+
+It is guaranteed that the following conditions hold for these 2 arrays:
+
+l1=1;
+rk=n;
+li≤ri, for each positive integer i
+ such that 1≤i≤k;
+li=ri−1+1, for each positive integer i such that 2≤i≤k;
+Now you will be given a positive integer q which represents the number of modifications you need to do on s.
+
+Each modification is defined with one positive integer x:
+
+Find an index i such that li≤x≤ri (notice that such i is unique).
+Let a=min(x,ri+li−x) and let b=max(x,ri+li−x).
+Reverse the substring of s from index a to index b.
+Reversing the substring [a,b] of a string s means to make s equal to s1,s2,…,sa−1, sb,sb−1,…,sa+1,sa, sb+1,sb+2,…,sn−1,sn.
+
+Print s after the last modification is finished.
+
+Input
+Each test contains multiple test cases. The first line contains a single integer t (1≤t≤10^4) — the number of test cases. Description of the test cases follows.
+
+The first line of each test case contains two integers n and k (1≤k≤n≤2⋅10^5) — the length of the string s, and the length of arrays l and r.
+
+The second line of each test case contains the string s (|s|=n) containing lowercase Latin letters — the initial string.
+
+The third line of each test case contains k positive integers l1,l2,…,lk (1≤li≤n) — the array l.
+
+The fourth line of each test case contains k positive integers r1,r2,…,rk (1≤ri≤n) — the array r.
+
+The fifth line of each test case contains a positive integer q (1≤q≤2⋅10^5) — the number of modifications you need to do to s.
+
+The sixth line of each test case contains q positive integers x1,x2,…,xq (1≤xi≤n) — the description of the modifications.
+
+It is guaranteed that the sum of n over all test cases does not exceed 2⋅10^5.
+
+It is guaranteed that the sum of q over all test cases does not exceed 2⋅10^5.
+
+It is guaranteed that the conditions in the statement hold for the arrays l and r.
+
+Output
+For each test case, in a new line, output the string s after the last modification is done.
+
+Example
+
+input
+5
+4 2
+abcd
+1 3
+2 4
+2
+1 3
+5 3
+abcde
+1 2 3
+1 2 5
+3
+1 2 3
+3 1
+gaf
+1
+3
+2
+2 2
+10 1
+aghcdegdij
+1
+10
+5
+1 2 3 4 2
+1 1
+a
+1
+1
+1
+1
+output
+badc
+abedc
+gaf
+jihgedcdga
+a
+
+Note
+In the first test case:
+The initial string is "abcd". In the first modification, we have x=1. Since l1=1≤x≤r1=2, we find the index i=1. We reverse the substring from index x=1 to l1+r1−x=1+2−1=2. After this modification, our string is "bacd".
+In the second modification (and the last modification), we have x=3. Since l2=3≤x≤r2=4, we find the index i=2. We reverse the substring from index x=3 to l2+r2−x=3+4−3=4. After this modification, our string is "badc".
+
+In the second test case:
+The initial string is "abcde". In the first modification, we have x=1. Since l1=1≤x≤r1=1, we find the index i=1. We reverse the substring from index x=1 to l1+r1−x=1+1−1=1. After this modification, our string hasn't changed ("abcde").
+In the second modification, we have x=2. Since l2=2≤x≤r2=2, we find the index i=2. We reverse the substring from index x=2 to l2+r2−x=2+2−2=2. After this modification, our string hasn't changed ("abcde").
+In the third modification (and the last modification), we have x=3. Since l3=3≤x≤r3=5, we find the index i=3. We reverse the substring from index x=3 to l3+r3−x=3+5−3=5. After this modification, our string is "abedc".
