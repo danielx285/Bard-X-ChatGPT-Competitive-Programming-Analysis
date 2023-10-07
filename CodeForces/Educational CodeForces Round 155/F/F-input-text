@@ -1,0 +1,66 @@
+Implement a C++ code that solves the following question:
+
+time limit per test 7 seconds
+memory limit per test 512 megabytes
+inputstandard input
+outputstandard output
+There are n heroes in a videogame. Each hero has some health value h and initial armor value a. Let the current value of armor be acur, initially equal to a.
+
+When x points of damage are inflicted on a hero, the following happens: if x<acur, then x gets subtracted from acur; otherwise, 1 gets subtracted from h and acur gets assigned back to a.
+
+In the start of the game, you choose the value x (an integer strictly greater than 0, arbitrarily large). Then you keep attacking all heroes in rounds: in one round, you inflict x points of damage to all alive heroes. A hero dies when his health becomes 0. The game ends when all heroes are dead.
+
+The last hero to die earns the number of points, equal to the number of rounds he was the only hero alive. The other heroes get 0 points. In particular, if the last round ends with multiple heroes dying, then every hero gets 0 points.
+
+The game is played for every possible x (from 1 to infinity). The points are reset between the games. What's the maximum number of points each hero has had?
+
+Input
+The first line contains a single integer t (1≤t≤10) — the number of testcases.
+
+The first line of each testcase contains a single integer n (1≤n≤2⋅10^5) — the number of heroes.
+
+The second line contains n integers h1,h2,…,hn (1≤hi≤2⋅10^5) — the health value of each hero.
+
+The third line contains n integers a1,a2,…,an (1≤ai≤2⋅10^5) — the initial armor value of each hero.
+
+Output
+For each testcase, print n integers — the maximum number of points each hero has had over the games played for every possible x.
+
+Example
+
+input
+3
+3
+3 1 2
+3 11 5
+1
+100
+200
+4
+5 9 5 1
+9 2 9 10
+output
+1 1 1 
+20000 
+0 4 0 0 
+
+Note
+In the first testcase, the game for x=1 is played as follows:
+
+before all rounds: the heroes have h=[3,1,2], acur=[3,11,5];
+round 1: 1 damage is inflicted on every hero: h remains [3,1,2], acur becomes [2,10,4];
+round 2: h=[3,1,2], acur=[1,9,3];
+round 3: the first hero runs out of armor, so he loses a health point: h=[2,1,2], acur=[3,8,2];
+...
+round 9: the first hero dies, since his health reaches 0: h=[0,1,1], acur=[0,2,1];
+round 10: the third hero dies: h=[0,1,0], acur=[0,1,0];
+round 11: the second hero dies: h=[0,0,0], acur=[0,0,0].
+The second hero was the last hero to die, and he was the only hero alive during one round. Thus, he gets 1 point for that game.
+
+The game for x=4 is played as follows:
+
+round 1: h=[2,1,2], acur=[3,7,1];
+round 2: h=[1,1,1], acur=[3,3,5];
+round 3: h=[0,0,1], acur=[0,0,1];
+round 4: h=[0,0,0], acur=[0,0,0];
+The third hero was the last hero to die, and he was the only hero alive during one round.
