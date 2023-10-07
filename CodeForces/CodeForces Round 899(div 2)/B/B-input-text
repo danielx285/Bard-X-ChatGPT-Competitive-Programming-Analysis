@@ -1,0 +1,53 @@
+Implement a C++ code that solves the following question:
+
+time limit per test 2 seconds
+memory limit per test 256 megabytes
+inputstandard input
+outputstandard output
+
+You have n sets of integers S1,S2,…,Sn. We call a set S attainable, if it is possible to choose some (possibly, none) of the sets S1,S2,…,Sn so that S is equal to their union†. If you choose none of S1,S2,…,Sn, their union is an empty set.
+
+Find the maximum number of elements in an attainable S such that S≠S1∪S2∪…∪Sn.
+
+† The union of sets A1,A2,…,Ak is defined as the set of elements present in at least one of these sets. It is denoted by A1∪A2∪…∪Ak. For example, {2,4,6}∪{2,3}∪{3,6,7}={2,3,4,6,7}.
+
+Input
+Each test contains multiple test cases. The first line contains the number of test cases t (1≤t≤100). The description of the test cases follows.
+The first line of each test case contains a single integer n (1≤n≤50).
+
+The following n lines describe the sets S1,S2,…,Sn. The i-th of these lines contains an integer ki (1≤ki≤50) — the number of elements in Si, followed by ki integers si,1,si,2,…,si,ki (1≤si,1<si,2<…<si,ki≤50) — the elements of Si.
+
+Output
+For each test case, print a single integer — the maximum number of elements in an attainable S such that S≠S1∪S2∪…∪Sn.
+
+Example
+
+input
+4
+3
+3 1 2 3
+2 4 5
+2 3 4
+4
+4 1 2 3 4
+3 2 5 6
+3 3 5 6
+3 4 5 6
+5
+1 1
+3 3 6 10
+1 9
+2 1 3
+3 5 8 9
+1
+2 4 28
+output
+4
+5
+6
+0
+Note
+In the first test case, S=S1∪S3={1,2,3,4} is the largest attainable set not equal to S1∪S2∪S3={1,2,3,4,5}.
+In the second test case, we can pick S=S2∪S3∪S4={2,3,4,5,6}.
+In the third test case, we can pick S=S2∪S5=S2∪S3∪S5={3,5,6,8,9,10}.
+In the fourth test case, the only attainable set is S=∅.
