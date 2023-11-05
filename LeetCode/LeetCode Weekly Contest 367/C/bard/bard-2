@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        // Create a map to store the indices of elements in the array.
+        unordered_map<int, vector<int>> numToIndices;
+        for (int i = 0; i < nums.size(); i++) {
+            numToIndices[nums[i]].push_back(i);
+        }
+
+        // Iterate over the array and check for each element if there is another element in the array
+        // that satisfies the given conditions.
+        for (int i = 0; i < nums.size(); i++) {
+            // Find the minimum index of an element that is greater than or equal to nums[i] + valueDifference.
+            int minIndex = lower_bound(nums.begin(), nums.end(), nums[i] + valueDifference) - nums.begin();
+
+            // Find the maximum index of an element that is less than or equal to nums[i] - valueDifference.
+            int maxIndex = upper_bound(nums.begin(), nums.end(), nums[i] - valueDifference) - nums.begin() - 1;
+
+            // Check if there is an element in the range [minIndex, maxIndex] that satisfies the given conditions.
+            for (int j = minIndex; j <= maxIndex; j++) {
+                if (abs(i - j) >= indexDifference) {
+                    return {i, j};
+                }
+            }
+        }
+
+        // If no pair of indices is found that satisfies the given conditions, return [-1, -1].
+        return {-1, -1};
+    }
+};

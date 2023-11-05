@@ -1,0 +1,31 @@
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <climits>
+
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        int n = nums.size();
+        unordered_map<int, unordered_set<int>> valueIndices;  // Map of values to their indices.
+
+        for (int i = 0; i < n; i++) {
+            int num = nums[i];
+
+            // Check if there's a value in the map that satisfies the conditions.
+            if (valueIndices.find(num) != valueIndices.end()) {
+                for (int j : valueIndices[num]) {
+                    if (abs(i - j) >= indexDifference && abs(num - nums[j]) >= valueDifference) {
+                        return {i, j};
+                    }
+                }
+            }
+
+            // Add the current index to the set for the current value.
+            valueIndices[num].insert(i);
+        }
+
+        // If no such pair of indices is found, return {-1, -1}.
+        return {-1, -1};
+    }
+};

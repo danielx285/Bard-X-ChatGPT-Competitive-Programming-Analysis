@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        // Create two vectors to store the indices of elements less than or equal to
+        // the current element and greater than the current element, respectively.
+        vector<int> lessOrEqual, greaterThen;
+        lessOrEqual.push_back(0);
+        greaterThen.push_back(0);
+
+        // Iterate over the array and populate the two vectors.
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] <= nums[lessOrEqual.back()]) {
+                lessOrEqual.push_back(i);
+            } else {
+                greaterThen.push_back(i);
+            }
+        }
+
+        // Iterate over the two vectors to find two indices that satisfy the given
+        // conditions.
+        for (int i = 0; i < lessOrEqual.size(); i++) {
+            for (int j = 0; j < greaterThen.size(); j++) {
+                if (abs(lessOrEqual[i] - greaterThen[j]) >= indexDifference &&
+                    abs(nums[lessOrEqual[i]] - nums[greaterThen[j]]) >= valueDifference) {
+                    return {lessOrEqual[i], greaterThen[j]};
+                }
+            }
+        }
+
+        // If no two indices satisfy the given conditions, return [-1, -1].
+        return {-1, -1};
+    }
+};

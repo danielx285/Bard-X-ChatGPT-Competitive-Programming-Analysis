@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        int n = nums.size();
+        vector<int> answer = {-1, -1};
+
+        // Create a cumulative sum array to help us find indices that satisfy the index difference condition.
+        vector<int> cumulativeSum(n);
+        cumulativeSum[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            cumulativeSum[i] = cumulativeSum[i - 1] + nums[i];
+        }
+
+        // Iterate over all possible pairs of indices.
+        for (int i = 0; i < n; i++) {
+            for (int j = i + indexDifference; j < n; j++) {
+                // Check if the pair of indices satisfies the value difference condition.
+                if (abs(nums[i] - nums[j]) >= valueDifference) {
+                    answer = {i, j};
+                    break;
+                }
+            }
+
+            // If we have found a valid pair of indices, break out of the loop.
+            if (answer[0] != -1 && answer[1] != -1) {
+                break;
+            }
+        }
+
+        return answer;
+    }
+};

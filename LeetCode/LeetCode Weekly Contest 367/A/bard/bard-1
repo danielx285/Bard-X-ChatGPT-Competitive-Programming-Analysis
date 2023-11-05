@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        // Create a map to store the indices of each element in the array.
+        unordered_map<int, vector<int>> elementIndices;
+        for (int i = 0; i < nums.size(); i++) {
+            elementIndices[nums[i]].push_back(i);
+        }
+
+        // Iterate over the elements in the array.
+        for (int i = 0; i < nums.size(); i++) {
+            // Find the indices of the current element.
+            vector<int>& indices = elementIndices[nums[i]];
+
+            // Iterate over the indices of the current element, starting from the next index.
+            for (int j = i + 1; j < indices.size(); j++) {
+                // Check if the current index and the next index satisfy the given conditions.
+                if (abs(indices[i] - indices[j]) >= indexDifference && abs(nums[i] - nums[j]) >= valueDifference) {
+                    // Return an integer array containing the two indices.
+                    return {indices[i], indices[j]};
+                }
+            }
+        }
+
+        // If there are no two indices that satisfy the given conditions, return [-1, -1].
+        return {-1, -1};
+    }
+};

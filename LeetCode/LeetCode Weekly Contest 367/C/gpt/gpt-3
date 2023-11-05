@@ -1,0 +1,28 @@
+#include <vector>
+#include <iostream>
+
+class Solution {
+public:
+    std::vector<int> findIndices(std::vector<int>& nums, int indexDifference, int valueDifference) {
+        int n = nums.size();
+        int minVal = INT_MAX, maxVal = INT_MIN;
+        int minIndex = -1, maxIndex = -1;
+        
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] < minVal) {
+                minVal = nums[i];
+                minIndex = i;
+            }
+            if (nums[i] > maxVal) {
+                maxVal = nums[i];
+                maxIndex = i;
+            }
+            
+            if (i - minIndex >= indexDifference && std::abs(maxVal - minVal) >= valueDifference) {
+                return {minIndex, maxIndex};
+            }
+        }
+        
+        return {-1, -1}; // No valid indices found
+    }
+};

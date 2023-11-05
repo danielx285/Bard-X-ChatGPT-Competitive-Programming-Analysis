@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        // Create a map to store the elements of the array and their indices.
+        map<int, int> elementToIndexMap;
+        for (int i = 0; i < nums.size(); i++) {
+            elementToIndexMap[nums[i]] = i;
+        }
+
+        // Iterate over the array and find a pair of indices that satisfy the given conditions.
+        for (int i = 0; i < nums.size(); i++) {
+            // Find the minimum index j such that abs(i - j) >= indexDifference and abs(nums[i] - nums[j]) >= valueDifference.
+            int j = i + indexDifference;
+            while (j < nums.size() && abs(nums[i] - nums[j]) < valueDifference) {
+                j++;
+            }
+
+            // If we found a valid index j, return the indices i and j.
+            if (j < nums.size() && abs(i - j) >= indexDifference && abs(nums[i] - nums[j]) >= valueDifference) {
+                return {i, j};
+            }
+
+            // If we did not find a valid index j, we can skip to the next element of the array.
+            i = j;
+        }
+
+        // If we could not find a pair of indices that satisfy the given conditions, return [-1, -1].
+        return {-1, -1};
+    }
+};
