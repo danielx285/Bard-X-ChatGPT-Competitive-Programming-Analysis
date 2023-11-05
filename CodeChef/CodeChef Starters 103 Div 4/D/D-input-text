@@ -1,0 +1,45 @@
+Implement a C++ code that solves the following question:
+
+You are given a positive integer N. Note that 
+N may exceed the range of a 64-bit integer.
+
+Find a positive integer M (without leading zeroes) divisible by 8, formed by changing minimum number of digits in N.
+Note that the number of digits in M must be equal to the number of digits in N.
+
+If there are multiple answers, you may print any one of them.
+
+Input Format
+The first line of input will contain a single integer T, denoting the number of test cases.
+Each test case consists of a single line of input containing two space separated numbers - the length of N and N.
+Output Format
+For each test case, output on a new line, a positive number M (without leading zeroes) divisible by 8 and formed by changing the minimum number of digits of N.
+
+If there are multiple answers, you may print any one of them.
+
+Constraints
+1≤T≤100
+1≤N<10^1000
+
+Sample 1:
+Input
+4
+1 7
+3 512
+4 1044
+21 299792458196831048576
+Output
+8
+512
+1144
+299792458196831048576
+
+Explanation:
+Test case 1: 
+7 is not divisible by 8. It can be changed to 8 which is divisible by 8 by changing 1 digit which is the minimum possible.
+
+Test case 2: 
+512 is already divisible by 8. So, no need to change it.
+
+Test case 3: 
+1044 is not divisible by 8. It can be changed to 1144 which is divisible by 8 by changing 1 digit which is the minimum possible.
+Note that other valid answers like 1024, 1040, 1344 are also possible, since each of them require changing a single digit only.

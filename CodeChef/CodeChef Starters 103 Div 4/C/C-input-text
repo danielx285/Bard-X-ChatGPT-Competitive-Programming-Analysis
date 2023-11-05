@@ -1,0 +1,35 @@
+Implement a C++ code that solves the following question:
+
+Alice and Bob are playing a game. Each player rolls a regular six faced dice 3 times.
+The score of a player is the maximum number that can be formed using the rolls.
+The player with the highest score wins, and the game ends in a tie if both players have the same score.
+
+Find the winner of the game or determine whether it is a tie.
+
+Input Format
+The first line of input will contain a single integer T, denoting the number of test cases.
+Each test case contains six space-separated integers A1, A2, A3, B1, B2 and B3 — the values Alice gets in her 3 dice rolls, followed by the values which Bob gets in his 3 dice rolls.
+
+Output Format
+For each test case, output on a new line Alice if Alice wins, Bob if Bob wins and Tie in case of a tie.
+
+Note that you may print each character in uppercase or lowercase. For example, the strings tie, TIE, Tie, and tIe are considered identical.
+
+Constraints
+1≤T≤10^4
+1≤A1,A2,A3,B1,B2,B3≤6
+Sample 1:
+Input
+3
+3 2 5 6 1 1
+4 4 5 5 4 4
+6 6 6 6 6 1
+Output
+Bob
+Tie
+Alice
+
+Explanation:
+Test Case 1: Alice's score is 532 which is less than Bob's score 611.
+Test Case 2: Alice's score is 544 which is same as Bob's score 544.
+Test Case 3: Alice's score is 666 which is greater than as Bob's score 661.
