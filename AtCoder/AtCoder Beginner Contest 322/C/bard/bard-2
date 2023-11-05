@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+  int n, m;
+  cin >> n >> m;
+  vector<int> a(m);
+  for (int i = 0; i < m; i++) {
+    cin >> a[i];
+  }
+
+  vector<int> days(n + 1, n);
+  for (int i = m - 1; i >= 0; i--) {
+    days[a[i] - 1] = min(days[a[i] - 1], a[i] - a[i - 1]);
+  }
+
+  for (int i = 1; i <= n; i++) {
+    cout << days[i] << endl;
+  }
+
+  return 0;
+}

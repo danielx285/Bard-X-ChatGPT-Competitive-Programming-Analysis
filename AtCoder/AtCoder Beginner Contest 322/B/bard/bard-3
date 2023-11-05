@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+  int n, m;
+  string s, t;
+
+  cin >> n >> m;
+  cin >> s >> t;
+
+  // Check if S is a prefix of T.
+  bool is_prefix = true;
+  for (int i = 0; i < n; i++) {
+    if (s[i] != t[i]) {
+      is_prefix = false;
+      break;
+    }
+  }
+
+  // Check if S is a suffix of T.
+  bool is_suffix = true;
+  for (int i = 0; i < n; i++) {
+    if (s[i] != t[m - n + i]) {
+      is_suffix = false;
+      break;
+    }
+  }
+
+  // Print the answer based on the results.
+  if (is_prefix && is_suffix) {
+    cout << 0 << endl;
+  } else if (is_prefix && !is_suffix) {
+    cout << 1 << endl;
+  } else if (!is_prefix && is_suffix) {
+    cout << 2 << endl;
+  } else {
+    cout << 3 << endl;
+  }
+
+  return 0;
+}

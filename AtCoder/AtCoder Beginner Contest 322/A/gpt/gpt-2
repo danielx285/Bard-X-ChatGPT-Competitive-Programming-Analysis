@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+
+int findFirstABCPosition(const std::string& s) {
+    int n = s.length();
+    
+    for (int i = 0; i <= n - 3; ++i) {
+        if (s[i] == 'A' && s[i + 1] == 'B' && s[i + 2] == 'C') {
+            return i + 1; // Position is 1-based, so add 1
+        }
+    }
+    
+    return -1; // ABC not found in the string
+}
+
+int main() {
+    int N;
+    std::string S;
+    
+    std::cin >> N;
+    std::cin >> S;
+    
+    int position = findFirstABCPosition(S);
+    
+    std::cout << position << std::endl;
+    
+    return 0;
+}

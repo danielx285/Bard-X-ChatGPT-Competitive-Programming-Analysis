@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int N, M;
+    cin >> N >> M;
+    string S, T;
+    cin >> S >> T;
+
+    if (S == T) {
+        cout << "0" << endl; // S is both a prefix and a suffix of T
+    } else if (T.find(S) == 0) {
+        cout << "1" << endl; // S is a prefix of T
+    } else if (T.find(S, M - N) == M - N) {
+        cout << "2" << endl; // S is a suffix of T
+    } else {
+        cout << "3" << endl; // S is neither a prefix nor a suffix of T
+    }
+
+    return 0;
+}
