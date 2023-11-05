@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+struct Player {
+    int id;
+    int wins;
+};
+
+bool comparePlayers(const Player& p1, const Player& p2) {
+    if (p1.wins == p2.wins) {
+        return p1.id < p2.id;
+    }
+    return p1.wins > p2.wins;
+}
+
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<Player> players(N);
+    
+    for (int i = 0; i < N; ++i) {
+        players[i].id = i + 1;
+        players[i].wins = 0;
+        string results;
+        cin >> results;
+        
+        for (int j = 0; j < N; ++j) {
+            if (results[j] == 'o') {
+                players[i].wins++;
+            }
+        }
+    }
+    
+    sort(players.begin(), players.end(), comparePlayers);
+    
+    for (int i = 0; i < N; ++i) {
+        cout << players[i].id << " ";
+    }
+    
+    cout << endl;
+    
+    return 0;
+}

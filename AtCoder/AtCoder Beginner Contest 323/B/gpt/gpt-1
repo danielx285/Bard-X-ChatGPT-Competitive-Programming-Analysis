@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Player {
+    int number;
+    int wins;
+
+    Player(int num) : number(num), wins(0) {}
+};
+
+bool comparePlayers(const Player &a, const Player &b) {
+    if (a.wins == b.wins) {
+        return a.number < b.number;
+    }
+    return a.wins > b.wins;
+}
+
+int main() {
+    int N;
+    cin >> N;
+
+    vector<Player> players;
+
+    for (int i = 1; i <= N; ++i) {
+        players.push_back(Player(i));
+    }
+
+    for (int i = 0; i < N; ++i) {
+        string result;
+        cin >> result;
+        for (int j = 0; j < N; ++j) {
+            if (result[j] == 'o') {
+                players[i].wins++;
+            }
+        }
+    }
+
+    sort(players.begin(), players.end(), comparePlayers);
+
+    for (int i = 0; i < N; ++i) {
+        cout << players[i].number << " ";
+    }
+
+    cout << endl;
+
+    return 0;
+}

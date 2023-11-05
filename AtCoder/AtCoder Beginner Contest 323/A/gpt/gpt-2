@@ -1,0 +1,20 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    string S;
+    cin >> S;
+
+    // Loop through even positions (starting from 2) and check if they are all '0'.
+    for (int i = 1; i < S.length(); i += 2) {
+        if (S[i] != '0') {
+            cout << "No" << endl;
+            return 0;
+        }
+    }
+
+    cout << "Yes" << endl;
+    return 0;
+}

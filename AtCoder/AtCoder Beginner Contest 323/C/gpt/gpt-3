@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int N, M;
+    cin >> N >> M;
+    
+    vector<int> A(M);
+    vector<string> S(N);
+
+    for (int i = 0; i < M; i++) {
+        cin >> A[i];
+    }
+
+    for (int i = 0; i < N; i++) {
+        cin >> S[i];
+    }
+
+    vector<int> scores(N);
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (S[i][j] == 'o') {
+                scores[i] += A[j];
+            }
+        }
+        scores[i] += (i + 1);
+    }
+
+    vector<int> remaining_problems(M);
+    for (int i = 0; i < M; i++) {
+        int max_score = -1;
+        for (int j = 0; j < N; j++) {
+            if (S[j][i] == 'x') {
+                max_score = max(max_score, scores[j]);
+            }
+        }
+        for (int j = 0; j < N; j++) {
+            if (S[j][i] == 'x' && scores[j] <= max_score) {
+                remaining_problems[i]++;
+            }
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        int min_problems_to_solve = M;
+        for (int j = 0; j < M; j++) {
+            if (S[i][j] == 'x') {
+                min_problems_to_solve = min(min_problems_to_solve, remaining_problems[j]);
+            }
+        }
+        cout << min_problems_to_solve << endl;
+    }
+
+    return 0;
+}

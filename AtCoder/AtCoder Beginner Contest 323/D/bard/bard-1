@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+struct Slime {
+  int size;
+  int count;
+};
+
+bool operator<(const Slime& a, const Slime& b) {
+  return a.size > b.size;
+}
+
+int main() {
+  int N;
+  cin >> N;
+
+  priority_queue<Slime> pq;
+  for (int i = 0; i < N; i++) {
+    int size, count;
+    cin >> size >> count;
+    pq.push({size, count});
+  }
+
+  int min_slimes = N;
+  while (pq.size() >= 2) {
+    Slime a = pq.top(); pq.pop();
+    Slime b = pq.top(); pq.pop();
+
+    if (a.size == b.size) {
+      pq.push({2 * a.size, a.count + b.count - 1});
+    } else {
+      pq.push(a);
+      pq.push(b);
+    }
+
+    min_slimes = min(min_slimes, (int)pq.size());
+  }
+
+  cout << min_slimes << endl;
+
+  return 0;
+}

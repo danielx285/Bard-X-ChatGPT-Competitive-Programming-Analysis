@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int MOD = 998244353;
+
+int main() {
+  int N, X;
+  cin >> N >> X;
+  vector<int> T(N);
+  for (int i = 0; i < N; i++) {
+    cin >> T[i];
+  }
+
+  // Calculate the total time of the playlist.
+  int total_time = 0;
+  for (int i = 0; i < N; i++) {
+    total_time += T[i];
+  }
+
+  // Calculate the number of times song 1 is played in X seconds.
+  int num_plays = X / total_time;
+
+  // Calculate the probability that song 1 is playing after X seconds.
+  double probability = 0.0;
+  for (int i = 0; i <= num_plays; i++) {
+    probability += pow(1.0 / N, num_plays - i) * pow((N - 1.0) / N, i);
+  }
+
+  // Calculate the probability modulo MOD.
+  int int_probability = (int)(probability * MOD + 0.5);
+  int_probability %= MOD;
+
+  // Print the probability.
+  cout << int_probability << endl;
+
+  return 0;
+}

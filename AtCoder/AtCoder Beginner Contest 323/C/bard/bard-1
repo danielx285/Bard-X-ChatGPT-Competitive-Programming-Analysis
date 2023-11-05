@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main() {
+  int N, M;
+  cin >> N >> M;
+
+  vector<int> scores(M);
+  for (int i = 0; i < M; i++) {
+    cin >> scores[i];
+  }
+
+  vector<string> states(N);
+  for (int i = 0; i < N; i++) {
+    cin >> states[i];
+  }
+
+  vector<int> unsolved(N);
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < M; j++) {
+      if (states[i][j] == 'x') {
+        unsolved[i]++;
+      }
+    }
+  }
+
+  vector<int> answers(N);
+  for (int i = 0; i < N; i++) {
+    int current_score = 0;
+    for (int j = 0; j < M; j++) {
+      if (states[i][j] == 'o') {
+        current_score += scores[j];
+      }
+    }
+
+    int min_unsolved = 0;
+    for (int j = 0; j < N; j++) {
+      if (i != j) {
+        int other_score = current_score - unsolved[i] + unsolved[j];
+        if (other_score > current_score) {
+          min_unsolved = max(min_unsolved, unsolved[j] - unsolved[i]);
+        }
+      }
+    }
+
+    answers[i] = min_unsolved;
+  }
+
+  for (int i = 0; i < N; i++) {
+    cout << answers[i] << endl;
+  }
+
+  return 0;
+}

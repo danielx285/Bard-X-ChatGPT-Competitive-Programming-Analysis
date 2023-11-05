@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+  int N, M;
+  cin >> N >> M;
+
+  // Read the scores of the problems.
+  vector<int> A(M);
+  for (int i = 0; i < M; i++) {
+    cin >> A[i];
+  }
+
+  // Read the strings indicating which problems each player has solved.
+  vector<string> S(N);
+  for (int i = 0; i < N; i++) {
+    cin >> S[i];
+  }
+
+  // Calculate the total scores of the players at the halfway point of the competition time.
+  vector<int> total_scores(N);
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < M; j++) {
+      if (S[i][j] == 'o') {
+        total_scores[i] += A[j];
+      }
+    }
+    total_scores[i] += i;
+  }
+
+  // For each player, calculate the at least how many of the problems that player i has not yet solved must player i solve to exceed all other players' current total scores.
+  vector<int> answers(N);
+  for (int i = 0; i < N; i++) {
+    int max_score = 0;
+    for (int j = 0; j < N; j++) {
+      if (i != j) {
+        max_score = max(max_score, total_scores[j]);
+      }
+    }
+
+    int points_needed = max_score - total_scores[i] + 1;
+
+    int unsolved_problems = 0;
+    for (int j = 0; j < M; j++) {
+      if (S[i][j] == 'x') {
+        unsolved_problems++;
+      }
+    }
+
+    answers[i] = max(0, points_needed - unsolved_problems);
+  }
+
+  // Print the answers.
+  for (int i = 0; i < N; i++) {
+    cout << answers[i] << endl;
+  }
+
+  return 0;
+}

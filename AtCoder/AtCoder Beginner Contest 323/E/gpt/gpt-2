@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int MOD = 998244353;
+
+int main() {
+    int N, X;
+    cin >> N >> X;
+    
+    vector<int> T(N);
+    for (int i = 0; i < N; i++) {
+        cin >> T[i];
+    }
+    
+    vector<vector<int>> dp(N + 1, vector<int>(X + 1, 0));
+    
+    dp[0][0] = 1;
+    
+    for (int i = 1; i <= N; i++) {
+        for (int j = 0; j <= X; j++) {
+            dp[i][j] = (1LL * dp[i][j] + 1LL * dp[i - 1][j] * T[i - 1]) % MOD;
+            if (j >= T[i - 1]) {
+                dp[i][j] = (1LL * dp[i][j] + dp[i - 1][j - T[i - 1]]) % MOD;
+            }
+        }
+    }
+    
+    int total = 0;
+    for (int i = 1; i <= X; i++) {
+        total = (1LL * total + dp[N][i]) % MOD;
+    }
+    
+    int denominator = 1;
+    for (int i = 0; i < N; i++) {
+        denominator = (1LL * denominator * T[i]) % MOD;
+    }
+    
+    int answer = (1LL * total * denominator) % MOD;
+    
+    cout << answer << endl;
+    
+    return 0;
+}

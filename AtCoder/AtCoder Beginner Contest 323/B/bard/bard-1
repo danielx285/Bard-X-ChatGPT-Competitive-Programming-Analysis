@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+  int n;
+  cin >> n;
+
+  vector<string> results(n);
+  for (int i = 0; i < n; i++) {
+    cin >> results[i];
+  }
+
+  vector<int> wins(n);
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (i != j && results[i][j] == 'o') {
+        wins[i]++;
+      }
+    }
+  }
+
+  // Sort the player numbers in descending order of wins.
+  vector<int> player_numbers(n);
+  for (int i = 0; i < n; i++) {
+    player_numbers[i] = i + 1;
+  }
+
+  sort(player_numbers.begin(), player_numbers.end(), [&](int a, int b) {
+    return wins[b] > wins[a] || (wins[b] == wins[a] && a < b);
+  });
+
+  // Print the player numbers in descending order of rank.
+  for (int i = 0; i < n; i++) {
+    cout << player_numbers[i] << " ";
+  }
+  cout << endl;
+
+  return 0;
+}
