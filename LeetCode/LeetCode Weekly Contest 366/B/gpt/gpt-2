@@ -1,0 +1,48 @@
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+class Solution {
+public:
+    int minProcessingTime(std::vector<int>& processorTime, std::vector<int>& tasks) {
+        int n = processorTime.size();
+        std::sort(processorTime.begin(), processorTime.end());
+        std::priority_queue<long long, std::vector<long long>, std::greater<long long>> availableTimes;
+
+        for (int i = 0; i < n; i++) {
+            availableTimes.push(processorTime[i]);
+        }
+
+        std::sort(tasks.begin(), tasks.end(), std::greater<int>());
+        long long left = 0;
+        long long right = 1e18; // Upper bound for binary search
+
+        while (left < right) {
+            long long mid = left + (right - left) / 2;
+            bool possible = true;
+            std::priority_queue<long long, std::vector<long long>, std::greater<long long>> copyAvailableTimes = availableTimes;
+
+            for (int i = 0; i < n * 4; i++) {
+                if (copyAvailableTimes.empty()) {
+                    possible = false;
+                    break;
+                }
+                long long currTime = copyAvailableTimes.top();
+                copyAvailableTimes.pop();
+                if (currTime + tasks[i] > mid) {
+                    possible = false;
+                    break;
+                }
+                copyAvailableTimes.push(currTime + tasks[i]);
+            }
+
+            if (possible) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return static_cast<int>(left);
+    }
+};

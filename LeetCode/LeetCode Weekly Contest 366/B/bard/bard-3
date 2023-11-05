@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minProcessingTime(vector<int>& processorTime, vector<int>& tasks) {
+        // Sort the processors in ascending order of their availability time.
+        sort(processorTime.begin(), processorTime.end());
+
+        // Sort the tasks in descending order of their execution time.
+        sort(tasks.rbegin(), tasks.rend());
+
+        // Create a priority queue to store the processors that are currently available.
+        priority_queue<int, vector<int>, greater<int>> availableProcessors;
+
+        // Add the first processor to the priority queue.
+        availableProcessors.push(processorTime[0]);
+
+        // Initialize the minimum processing time to the availability time of the first processor.
+        int minProcessingTime = processorTime[0];
+
+        // Iterate over the tasks.
+        for (int i = 0; i < tasks.size(); i++) {
+            // Get the processor that is currently available and has the least availability time.
+            int currentProcessor = availableProcessors.top();
+
+            // Update the minimum processing time if necessary.
+            minProcessingTime = max(minProcessingTime, currentProcessor + tasks[i]);
+
+            // Update the availability time of the current processor.
+            availableProcessors.pop();
+            availableProcessors.push(currentProcessor + tasks[i]);
+        }
+
+        // Return the minimum processing time.
+        return minProcessingTime;
+    }
+};

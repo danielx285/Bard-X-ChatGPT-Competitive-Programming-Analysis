@@ -1,0 +1,50 @@
+#include <vector>
+#include <string>
+#include <iostream>
+#include <climits>
+
+using namespace std;
+
+class Solution {
+public:
+    int minOperations(string s1, string s2, int x) {
+        int n = s1.length();
+        
+        // Initialize a 2D DP array to store the minimum cost at each position.
+        vector<vector<int>> dp(n + 1, vector<int>(2, INT_MAX));
+        
+        // Initialize the DP array with the cost of starting from both 0 and 1 at the first position.
+        dp[0][0] = 0;  // Starting from 0
+        dp[0][1] = x;  // Starting from 1
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < 2; ++j) {
+                // Calculate the cost of making the current character equal to s2.
+                int cost = (s1[i] - '0') ^ j;  // XOR operation
+                
+                // Update the minimum cost for the next position.
+                dp[i + 1][j] = min(dp[i + 1][j], dp[i][j] + cost);
+                
+                // If we can perform the second operation, consider it as well.
+                if (i < n - 1) {
+                    dp[i + 2][j ^ 1] = min(dp[i + 2][j ^ 1], dp[i][j] + x);
+                }
+            }
+        }
+        
+        // Check if the last characters of s1 and s2 are equal.
+        if (s1[n - 1] == s2[n - 1]) {
+            return min(dp[n][0], dp[n][1]);
+        }
+        
+        // If the last characters are not equal, it's impossible to make them equal.
+        return -1;
+    }
+};
+
+int main() {
+    Solution solution;
+    cout << solution.minOperations("1100011000", "0101001010", 2) << endl;  // Output: 4
+    cout << solution.minOperations("10110", "00011", 4) << endl;  // Output: -1
+    return 0;
+}

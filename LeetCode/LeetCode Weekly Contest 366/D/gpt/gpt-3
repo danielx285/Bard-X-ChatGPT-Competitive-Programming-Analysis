@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxSum(vector<int>& nums, int k) {
+        const int MOD = 1e9 + 7;
+        int n = nums.size();
+        
+        sort(nums.begin(), nums.end());
+        
+        long long result = 0;
+        for (int i = n - 1; i >= n - k; i--) {
+            result = (result + (long long)nums[i] * nums[i]) % MOD;
+        }
+        
+        return result;
+    }
+};

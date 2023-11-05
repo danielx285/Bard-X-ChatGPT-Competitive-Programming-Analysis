@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        // Initialize the two sums.
+        int num1 = 0, num2 = 0;
+
+        // Iterate over the range [1, n] and add the numbers to the corresponding sum.
+        for (int i = 1; i <= n; i++) {
+            if (i % m != 0) {
+                num1 += i;
+            } else {
+                num2 += i;
+            }
+        }
+
+        // Return the difference of the two sums.
+        return num1 - num2;
+    }
+};

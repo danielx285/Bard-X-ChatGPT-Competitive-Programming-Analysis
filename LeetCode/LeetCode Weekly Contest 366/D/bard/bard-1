@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxSum(vector<int>& nums, int k) {
+        // Sort the array in decreasing order.
+        sort(nums.begin(), nums.end(), greater<int>());
+
+        // Calculate the sum of squares of the first k elements.
+        long long sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += (long long)nums[i] * nums[i];
+        }
+
+        // Initialize the maximum sum of squares.
+        long long maxSum = sum;
+
+        // Iterate over the array and update the sum of squares.
+        for (int i = k; i < nums.size(); i++) {
+            // Calculate the difference between the sum of squares of the current element
+            // and the sum of squares of the first element.
+            long long diff = (long long)nums[i] * nums[i] - (long long)nums[0] * nums[0];
+
+            // If the difference is positive, update the sum of squares and the maximum sum of squares.
+            if (diff > 0) {
+                sum += diff;
+                maxSum = max(maxSum, sum);
+            }
+        }
+
+        return maxSum % (1000000007);
+    }
+};

@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int minOperations(string s1, string s2, int x) {
+        int n = s1.length();
+        int minCost = INT_MAX;
+        // Initialize a 2D array to store the minimum cost to make the two strings equal
+        // up to the given index.
+        int dp[n][2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < 2; j++) {
+                dp[i][j] = INT_MAX;
+            }
+        }
+
+        // Base case.
+        dp[0][0] = 0;
+
+        // Iterate over the strings.
+        for (int i = 1; i < n; i++) {
+            // If the characters at the current index are equal, we can do nothing or flip
+            // the character at the previous index.
+            if (s1[i] == s2[i]) {
+                dp[i][0] = min(dp[i - 1][0], dp[i - 1][1] + 1);
+                dp[i][1] = min(dp[i - 1][1], dp[i - 1][0] + 1);
+            } else {
+                // If the characters at the current index are different, we need to flip
+                // the character at the current index or flip both characters at the
+                // current index and the previous index.
+                dp[i][0] = min(dp[i - 1][0] + x, dp[i - 1][1] + 1);
+                dp[i][1] = min(dp[i - 1][1] + x, dp[i - 1][0] + 1);
+            }
+        }
+
+        // The minimum cost is the minimum of dp[n - 1][0] and dp[n - 1][1].
+        minCost = min(dp[n - 1][0], dp[n - 1][1]);
+
+        // Return -1 if it is impossible to make the two strings equal.
+        return minCost == INT_MAX ? -1 : minCost;
+    }
+};

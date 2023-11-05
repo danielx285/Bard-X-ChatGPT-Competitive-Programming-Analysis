@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+    int minOperations(string s1, string s2, int x) {
+        int n = s1.length();
+        int cost = 0;
+        
+        vector<int> diff;
+        for (int i = 0; i < n; i++) {
+            if (s1[i] != s2[i]) {
+                diff.push_back(i);
+            }
+        }
+        
+        int size = diff.size();
+        if (size % 2 != 0) {
+            return -1; // If the number of differing bits is odd, it's impossible to make them equal.
+        }
+        
+        for (int i = 0; i < size; i++) {
+            if (i % 2 == 0) {
+                cost += min(x, 2); // Choose the cheaper operation between flipping a pair and flipping individual bits.
+            }
+        }
+        
+        return cost;
+    }
+};
+
+int main() {
+    Solution solution;
+    string s1 = "1100011000";
+    string s2 = "0101001010";
+    int x = 2;
+    int result = solution.minOperations(s1, s2, x);
+    cout << "Minimum cost: " << result << endl;
+    
+    s1 = "10110";
+    s2 = "00011";
+    x = 4;
+    result = solution.minOperations(s1, s2, x);
+    cout << "Minimum cost: " << result << endl;
+    
+    return 0;
+}

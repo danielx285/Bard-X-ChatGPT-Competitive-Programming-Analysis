@@ -1,0 +1,45 @@
+#include <vector>
+#include <algorithm>
+
+class Solution {
+public:
+    int minProcessingTime(std::vector<int>& processorTime, std::vector<int>& tasks) {
+        int n = processorTime.size();
+        int left = 0, right = 1e9;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            long long total = 0;
+            int processors = 0;
+            
+            for (int i = 0; i < n; ++i) {
+                int timeLeft = mid - processorTime[i];
+                int j = 4 * i;
+                
+                while (j < 4 * (i + 1) && j < tasks.size()) {
+                    if (tasks[j] <= timeLeft) {
+                        timeLeft -= tasks[j];
+                        ++j;
+                    } else {
+                        break;
+                    }
+                }
+                
+                if (j == 4 * (i + 1)) {
+                    total += mid;
+                    ++processors;
+                } else {
+                    total += mid - timeLeft;
+                }
+            }
+            
+            if (processors == n) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return left;
+    }
+};

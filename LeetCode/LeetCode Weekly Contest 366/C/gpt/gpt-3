@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+class Solution {
+public:
+    int minOperations(std::string s1, std::string s2, int x) {
+        int n = s1.length();
+        int cost = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (s1[i] != s2[i]) {
+                if (i + 1 < n && s1[i] == s1[i + 1]) {
+                    // Perform operation 2 (flip adjacent characters)
+                    s1[i] = s1[i] == '0' ? '1' : '0';
+                    s1[i + 1] = s1[i + 1] == '0' ? '1' : '0';
+                    cost += 1;
+                } else {
+                    // Perform operation 1 (flip two characters)
+                    if (x >= 2) {
+                        s1[i] = s1[i] == '0' ? '1' : '0';
+                        s1[i + 1] = s1[i + 1] == '0' ? '1' : '0';
+                        cost += x;
+                    } else {
+                        return -1;  // It's impossible to make the strings equal
+                    }
+                }
+            }
+        }
+
+        return cost;
+    }
+};
+
+int main() {
+    Solution solution;
+    std::string s1 = "1100011000";
+    std::string s2 = "0101001010";
+    int x = 2;
+
+    int result = solution.minOperations(s1, s2, x);
+    if (result == -1) {
+        std::cout << "It's impossible to make the strings equal." << std::endl;
+    } else {
+        std::cout << "Minimum cost: " << result << std::endl;
+    }
+
+    return 0;
+}

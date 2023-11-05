@@ -1,0 +1,52 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+    int minOperations(string s1, string s2, int x) {
+        // Calculate the number of different characters between the two strings.
+        int diff = 0;
+        for (int i = 0; i < s1.size(); i++) {
+            if (s1[i] != s2[i]) {
+                diff++;
+            }
+        }
+
+        // If the number of different characters is greater than the length of the
+        // strings, then it is impossible to make the two strings equal.
+        if (diff > s1.size()) {
+            return -1;
+        }
+
+        // Initialize the minimum cost to make the two strings equal.
+        int min_cost = diff;
+
+        // Initialize a vector to store the cost of making each character in s1
+        // equal to the corresponding character in s2.
+        vector<int> cost(s1.size(), x);
+
+        // Iterate over the string s1 and calculate the cost of making each
+        // character equal to the corresponding character in s2.
+        for (int i = 0; i < s1.size() - 1; i++) {
+            cost[i] = min(cost[i], 1);
+        }
+
+        // Initialize a variable to store the current cost of making the two
+        // strings equal.
+        int current_cost = 0;
+
+        // Iterate over the string s1 and calculate the current cost of making
+        // the two strings equal.
+        for (int i = 0; i < s1.size(); i++) {
+            current_cost += cost[i];
+        }
+
+        // Update the minimum cost to make the two strings equal.
+        min_cost = min(min_cost, current_cost);
+
+        // Return the minimum cost to make the two strings equal.
+        return min_cost;
+    }
+};

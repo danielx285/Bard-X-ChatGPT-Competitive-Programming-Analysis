@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        // Initialize the sums num1 and num2.
+        int num1 = 0;
+        int num2 = 0;
+
+        // Iterate from 1 to n.
+        for (int i = 1; i <= n; i++) {
+            // If i is not divisible by m, add it to num1.
+            if (i % m != 0) {
+                num1 += i;
+            }
+            // Otherwise, add it to num2.
+            else {
+                num2 += i;
+            }
+        }
+
+        // Return the difference of num1 and num2.
+        return num1 - num2;
+    }
+};

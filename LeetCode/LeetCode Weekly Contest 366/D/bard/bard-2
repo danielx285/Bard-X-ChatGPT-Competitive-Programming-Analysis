@@ -1,0 +1,31 @@
+class Solution {
+public:
+  int maxSum(vector<int>& nums, int k) {
+    // Sort the array in decreasing order.
+    sort(nums.begin(), nums.end(), greater<>());
+
+    // Create a priority queue to store the largest k elements in the array.
+    priority_queue<int> pq;
+    for (int i = 0; i < k; i++) {
+      pq.push(nums[i]);
+    }
+
+    // Initialize the maximum sum of squares.
+    int max_sum = 0;
+
+    // Iterate over the remaining elements in the array.
+    for (int i = k; i < nums.size(); i++) {
+      // If the current element is greater than the smallest element in the priority queue,
+      // then remove the smallest element from the priority queue and add the current element.
+      if (nums[i] > pq.top()) {
+        max_sum -= pq.top() * pq.top();
+        pq.pop();
+        pq.push(nums[i]);
+        max_sum += pq.top() * pq.top();
+      }
+    }
+
+    // Return the maximum sum of squares modulo 10^9 + 7.
+    return max_sum % (1000000007);
+  }
+};

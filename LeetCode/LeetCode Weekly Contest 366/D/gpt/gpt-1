@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <functional>
+
+using namespace std;
+
+class Solution {
+public:
+    int maxSum(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, less<int>> maxHeap;
+        
+        // Insert all elements into the max heap
+        for (int num : nums) {
+            maxHeap.push(num);
+        }
+        
+        // Perform the operation k times
+        while (k > 0) {
+            int firstMax = maxHeap.top();
+            maxHeap.pop();
+            int secondMax = maxHeap.top();
+            maxHeap.pop();
+            
+            // Update the values and insert back into the max heap
+            int updatedValue = (firstMax & secondMax) | (firstMax ^ secondMax);
+            maxHeap.push(updatedValue);
+            
+            k--;
+        }
+        
+        // Calculate the sum of squares of the k largest elements
+        long long result = 0;
+        while (!maxHeap.empty()) {
+            int num = maxHeap.top();
+            maxHeap.pop();
+            result += static_cast<long long>(num) * num;
+        }
+        
+        // Modulo 10^9 + 7
+        const int MOD = 1e9 + 7;
+        return static_cast<int>(result % MOD);
+    }
+};
+
+int main() {
+    vector<int> nums1 = {2, 6, 5, 8};
+    int k1 = 2;
+    Solution sol;
+    cout << sol.maxSum(nums1, k1) << endl; // Output: 261
+    
+    vector<int> nums2 = {4, 5, 4, 7};
+    int k2 = 3;
+    cout << sol.maxSum(nums2, k2) << endl; // Output: 90
+    
+    return 0;
+}

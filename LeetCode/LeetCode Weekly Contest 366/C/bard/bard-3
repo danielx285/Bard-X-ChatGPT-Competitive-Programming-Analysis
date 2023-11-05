@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int minOperations(string s1, string s2, int x) {
+        // Check if the two strings have the same number of ones and zeros.
+        int count_ones_s1 = 0, count_zeros_s1 = 0, count_ones_s2 = 0, count_zeros_s2 = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1[i] == '1') {
+                count_ones_s1++;
+            } else {
+                count_zeros_s1++;
+            }
+            if (s2[i] == '1') {
+                count_ones_s2++;
+            } else {
+                count_zeros_s2++;
+            }
+        }
+        if (count_ones_s1 != count_ones_s2 || count_zeros_s1 != count_zeros_s2) {
+            return -1;
+        }
+
+        // Create a dynamic programming table to store the minimum cost needed to make the two strings equal
+        // up to a certain index.
+        int dp[s1.length() + 1][s1.length() + 1];
+        for (int i = 0; i <= s1.length(); i++) {
+            for (int j = 0; j <= s1.length(); j++) {
+                dp[i][j] = INT_MAX;
+            }
+        }
+        dp[0][0] = 0;
+
+        // Iterate over the strings and update the dynamic programming table.
+        for (int i = 1; i <= s1.length(); i++) {
+            for (int j = 1; j <= s1.length(); j++) {
+                if (s1[i - 1] == s2[j - 1]) {
+                    // If the two characters at the current index are the same, then we can simply move on.
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    // If the two characters at the current index are different, then we need to perform an operation.
+                    dp[i][j] = min(dp[i - 1][j - 1] + x, dp[i - 1][j] + 1); // Flipping both s1[i - 1] and s1[j - 1] costs x. Flipping both s1[i - 1] and s1[i] costs 1.
+                }
+            }
+        }
+
+        // Return the minimum cost needed to make the two strings equal.
+        return dp[s1.length()][s1.length()];
+    }
+};
