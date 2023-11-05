@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> countVisitedNodes(vector<int>& edges) {
+        int n = edges.size();
+        vector<int> answer(n);
+        
+        for (int i = 0; i < n; ++i) {
+            vector<bool> visited(n, false);
+            int current = i;
+            int count = 0;
+            
+            while (!visited[current]) {
+                visited[current] = true;
+                current = edges[current];
+                ++count;
+            }
+            
+            answer[i] = count;
+        }
+        
+        return answer;
+    }
+};

@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> countVisitedNodes(vector<int>& edges) {
+        int n = edges.size();
+        vector<int> answer(n);
+        
+        for (int i = 0; i < n; ++i) {
+            vector<bool> visited(n, false); // Initialize visited array for each process
+            int node = i;
+            int count = 0;
+            
+            while (!visited[node]) {
+                visited[node] = true;
+                node = edges[node]; // Follow the edge
+                
+                count++;
+            }
+            
+            answer[i] = count;
+        }
+        
+        return answer;
+    }
+};

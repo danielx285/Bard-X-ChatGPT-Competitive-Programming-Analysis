@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        // Sort the array in ascending order.
+        sort(nums.begin(), nums.end());
+
+        // Initialize the maximum value over all triplets.
+        long long maxValue = 0;
+
+        // Iterate over all triplets of indices.
+        for (int i = 0; i < nums.size() - 2; i++) {
+            // Find the maximum value of (nums[i] - nums[j]) * nums[k] for all j > i and k > j.
+            long long localMaxValue = 0;
+            for (int j = i + 1; j < nums.size() - 1; j++) {
+                for (int k = j + 1; k < nums.size(); k++) {
+                    localMaxValue = max(localMaxValue, (nums[i] - nums[j]) * nums[k]);
+                }
+            }
+
+            // Update the maximum value over all triplets.
+            maxValue = max(maxValue, localMaxValue);
+        }
+
+        // Return the maximum value over all triplets.
+        return maxValue;
+    }
+};

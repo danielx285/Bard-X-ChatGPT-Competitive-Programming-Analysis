@@ -1,0 +1,28 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n = nums.size();
+        
+        long long maxVal = LLONG_MIN; // Initialize maximum value to negative infinity
+        long long secondMax = LLONG_MIN; // Initialize second maximum value to negative infinity
+        long long result = 0; // Initialize the result
+        
+        for (int i = 0; i < n; ++i) {
+            long long curr = nums[i];
+            
+            if (curr >= maxVal) {
+                // Update the maximum and second maximum values
+                secondMax = maxVal;
+                maxVal = curr;
+            } else if (curr > secondMax) {
+                // Update only the second maximum value
+                secondMax = curr;
+            }
+            
+            // Calculate the triplet value and update the result
+            result = max(result, (maxVal - secondMax) * curr);
+        }
+        
+        return result;
+    }
+};

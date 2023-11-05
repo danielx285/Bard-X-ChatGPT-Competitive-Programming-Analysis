@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        // Sort the array in ascending order.
+        sort(nums.begin(), nums.end());
+
+        // Find the maximum value of (nums[i] - nums[j]) * nums[k].
+        long long max_value = 0;
+        for (int i = 0; i < nums.size() - 2; i++) {
+            // Find the maximum value of nums[j] * nums[k] for a given value of nums[i].
+            long long max_value_for_i = 0;
+            int j = i + 1;
+            int k = nums.size() - 1;
+            while (j < k) {
+                max_value_for_i = max(max_value_for_i, (nums[j] - nums[i]) * nums[k]);
+                j++;
+                k--;
+            }
+
+            // Update the maximum value.
+            max_value = max(max_value, max_value_for_i);
+        }
+
+        return max_value;
+    }
+};

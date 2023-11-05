@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minSizeSubarray(vector<int>& nums, int target) {
+        int n = nums.size();
+        int minLength = n + 1;
+        int left = 0, right = 0;
+        int sum = 0;
+        
+        while (right < n) {
+            sum += nums[right];
+            while (sum >= target) {
+                minLength = min(minLength, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+            right++;
+        }
+        
+        return minLength == n + 1 ? -1 : minLength;
+    }
+};

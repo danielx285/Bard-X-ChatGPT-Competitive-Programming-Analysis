@@ -1,0 +1,32 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        // Sort the array in ascending order.
+        sort(nums.begin(), nums.end());
+
+        // Initialize the maximum value to 0.
+        long long maximumValue = 0;
+
+        // Iterate over the array from the second to the last element.
+        for (int i = 1; i < nums.size() - 1; i++) {
+            // Find the maximum value of (nums[i] - nums[j]) * nums[k] for all j < i and k > i.
+            long long maxValue = (nums[i] - nums[0]) * nums[nums.size() - 1];
+            for (int j = 1; j < i; j++) {
+                maxValue = max(maxValue, (nums[i] - nums[j]) * nums[nums.size() - 1]);
+            }
+            for (int k = i + 1; k < nums.size(); k++) {
+                maxValue = max(maxValue, (nums[i] - nums[0]) * nums[k]);
+            }
+
+            // Update the maximum value.
+            maximumValue = max(maximumValue, maxValue);
+        }
+
+        return maximumValue;
+    }
+};

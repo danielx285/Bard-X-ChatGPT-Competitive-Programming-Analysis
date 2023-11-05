@@ -1,0 +1,28 @@
+#include <vector>
+#include <deque>
+
+class Solution {
+public:
+    int minSizeSubarray(std::vector<int>& nums, int target) {
+        int n = nums.size();
+        int minLen = INT_MAX;
+        int currSum = 0;
+        std::deque<int> window;
+
+        for (int i = 0; i < n; i++) {
+            currSum += nums[i];
+            window.push_back(i);
+
+            while (currSum >= target) {
+                int windowSize = window.back() - window.front() + 1;
+                minLen = std::min(minLen, windowSize);
+
+                // Remove the leftmost element from the window
+                currSum -= nums[window.front()];
+                window.pop_front();
+            }
+        }
+
+        return minLen == INT_MAX ? -1 : minLen;
+    }
+};

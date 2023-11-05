@@ -1,0 +1,19 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        // Sort the array in ascending order.
+        sort(nums.begin(), nums.end());
+
+        // Find the maximum value of (nums[i]-nums[j])*nums[k] for any ordered
+        // triplet (i, j, k) such that i < j < k.
+        long long max_value = 0;
+        for (int i = 0; i < nums.size() - 2; i++) {
+            for (int j = i + 1; j < nums.size() - 1; j++) {
+                max_value = max(max_value, (nums[i] - nums[j]) * nums[j + 1]);
+            }
+        }
+
+        // Return the maximum value, or 0 if all triplets have a negative value.
+        return max_value;
+    }
+};

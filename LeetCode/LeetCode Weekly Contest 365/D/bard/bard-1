@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> countVisitedNodes(vector<int>& edges) {
+        int n = edges.size();
+        vector<vector<int>> adjList(n);
+        for (int i = 0; i < n; i++) {
+            adjList[i].push_back(edges[i]);
+        }
+
+        vector<int> visited(n, false);
+        vector<int> count(n, 0);
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                dfs(adjList, visited, count, i);
+            }
+        }
+
+        return count;
+    }
+
+private:
+    void dfs(vector<vector<int>>& adjList, vector<bool>& visited, vector<int>& count, int node) {
+        visited[node] = true;
+        count[node]++;
+
+        for (int neighbor : adjList[node]) {
+            if (!visited[neighbor]) {
+                dfs(adjList, visited, count, neighbor);
+            }
+        }
+    }
+};

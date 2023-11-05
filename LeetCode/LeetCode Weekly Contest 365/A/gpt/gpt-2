@@ -1,0 +1,30 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n = nums.size();
+        long long max_val = LLONG_MIN; // Initialize max_val to a very small value
+        long long second_max_val = LLONG_MIN; // Initialize second_max_val to a very small value
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] >= max_val) {
+                second_max_val = max_val;
+                max_val = nums[i];
+            } else if (nums[i] > second_max_val) {
+                second_max_val = nums[i];
+            }
+
+            if (max_val > 0 && second_max_val > 0) {
+                long long triplet_value = (max_val - second_max_val) * nums[i];
+                max_val = max(max_val, nums[i]); // Update max_val for the next iteration
+                max_val = max(max_val, second_max_val); // Make sure max_val is updated correctly
+                if (triplet_value > 0) {
+                    max_val = max(max_val, nums[i]); // Make sure max_val is updated correctly
+                    max_val = max(max_val, second_max_val); // Make sure max_val is updated correctly
+                    max_val = max(max_val, triplet_value);
+                }
+            }
+        }
+
+        return max(max_val, 0LL); // Return the maximum triplet value or 0 if all triplets are negative
+    }
+};

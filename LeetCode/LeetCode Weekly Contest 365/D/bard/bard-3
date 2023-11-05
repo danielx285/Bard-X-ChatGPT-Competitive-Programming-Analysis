@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> countVisitedNodes(vector<int>& edges) {
+        int n = edges.size();
+        vector<int> visited(n, 0);
+        vector<int> answer(n);
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                dfs(edges, i, visited, answer);
+            }
+        }
+
+        return answer;
+    }
+
+private:
+    void dfs(vector<int>& edges, int node, vector<int>& visited, vector<int>& answer) {
+        visited[node] = 1;
+        answer[node]++;
+
+        for (int neighbor : edges[node]) {
+            if (!visited[neighbor]) {
+                dfs(edges, neighbor, visited, answer);
+            }
+        }
+    }
+};

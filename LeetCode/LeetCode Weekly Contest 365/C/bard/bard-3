@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minSizeSubarray(vector<int>& nums, int target) {
+        // Calculate the prefix sums of the array.
+        vector<int> prefixSums(nums.size() + 1);
+        prefixSums[0] = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            prefixSums[i + 1] = prefixSums[i] + nums[i];
+        }
+
+        // Keep track of the current subarray sum, the minimum subarray length, and the starting index of the minimum subarray.
+        int currSubarraySum = 0;
+        int minSubarrayLength = INT_MAX;
+        int minSubarrayStartIndex = 0;
+
+        // Iterate over the prefix sums and keep updating the current subarray sum.
+        for (int i = 0; i < prefixSums.size(); i++) {
+            // If the current subarray sum is equal to the target, then update the minimum subarray length and starting index.
+            if (currSubarraySum == target) {
+                minSubarrayLength = min(minSubarrayLength, i - minSubarrayStartIndex);
+            }
+
+            // If the current subarray sum is greater than or equal to the target, then update the current subarray sum and starting index.
+            if (currSubarraySum >= target) {
+                currSubarraySum -= nums[minSubarrayStartIndex];
+                minSubarrayStartIndex++;
+            }
+
+            // Otherwise, add the next element of the array to the current subarray sum.
+            else {
+                currSubarraySum += nums[i];
+            }
+        }
+
+        // Return the minimum subarray length, or -1 if there is no subarray with sum equal to the target.
+        return minSubarrayLength == INT_MAX ? -1 : minSubarrayLength;
+    }
+};

@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        // Sort the array in ascending order.
+        sort(nums.begin(), nums.end());
+
+        // Initialize the maximum value.
+        long long max_value = 0;
+
+        // Iterate over all triplets of indices (i, j, k) such that i < j < k.
+        for (int i = 0; i < nums.size() - 2; i++) {
+            for (int j = i + 1; j < nums.size() - 1; j++) {
+                for (int k = j + 1; k < nums.size(); k++) {
+                    // Calculate the value of the triplet.
+                    long long value = (nums[i] - nums[j]) * nums[k];
+
+                    // Update the maximum value if necessary.
+                    max_value = max(max_value, value);
+                }
+            }
+        }
+
+        // Return the maximum value.
+        return max_value;
+    }
+};
