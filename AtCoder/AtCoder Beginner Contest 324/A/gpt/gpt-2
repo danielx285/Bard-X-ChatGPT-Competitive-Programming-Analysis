@@ -1,0 +1,29 @@
+#include <iostream>
+
+int main() {
+    int N;
+    std::cin >> N;
+
+    int firstValue;
+    std::cin >> firstValue;
+
+    bool allEqual = true;
+
+    for (int i = 1; i < N; i++) {
+        int currentValue;
+        std::cin >> currentValue;
+
+        if (currentValue != firstValue) {
+            allEqual = false;
+            break;
+        }
+    }
+
+    if (allEqual) {
+        std::cout << "Yes" << std::endl;
+    } else {
+        std::cout << "No" << std::endl;
+    }
+
+    return 0;
+}

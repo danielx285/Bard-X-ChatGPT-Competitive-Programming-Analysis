@@ -1,0 +1,34 @@
+#include <iostream>
+
+int main() {
+    int N;
+    std::cin >> N;
+    
+    int firstValue, currentValue;
+    bool allEqual = true;
+    
+    for (int i = 0; i < N; i++) {
+        int Ai;
+        std::cin >> Ai;
+        
+        if (i == 0) {
+            // The first value encountered
+            firstValue = Ai;
+            currentValue = Ai;
+        } else {
+            // Check if the current value is different from the first value
+            if (Ai != firstValue) {
+                allEqual = false;
+                break;  // No need to continue checking
+            }
+        }
+    }
+    
+    if (allEqual) {
+        std::cout << "Yes" << std::endl;
+    } else {
+        std::cout << "No" << std::endl;
+    }
+    
+    return 0;
+}

@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+bool isDivisible(int N, int x, int y) {
+  // Check if N is divisible by 2^x * 3^y
+  return (N % (1 << x) * (1 << y) == 0);
+}
+
+int main() {
+  int N;
+  cin >> N;
+
+  // Check if N is divisible by 2^x * 3^y for all possible values of x and y
+  for (int x = 0; x <= 30; x++) {
+    for (int y = 0; y <= 30; y++) {
+      if (isDivisible(N, x, y)) {
+        cout << "Yes" << endl;
+        return 0;
+      }
+    }
+  }
+
+  // If we reach here, then no values of x and y were found such that N is divisible by 2^x * 3^y
+  cout << "No" << endl;
+  return 0;
+}

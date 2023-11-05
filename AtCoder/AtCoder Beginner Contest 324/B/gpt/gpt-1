@@ -1,0 +1,23 @@
+#include <iostream>
+
+int main() {
+    long long N;
+    std::cin >> N;
+
+    // Keep dividing N by 2 and 3 until it's not divisible anymore
+    while (N % 2 == 0) {
+        N /= 2;
+    }
+    while (N % 3 == 0) {
+        N /= 3;
+    }
+
+    // If N is now equal to 1, it means it was originally of the form 2^x * 3^y
+    if (N == 1) {
+        std::cout << "Yes" << std::endl;
+    } else {
+        std::cout << "No" << std::endl;
+    }
+
+    return 0;
+}

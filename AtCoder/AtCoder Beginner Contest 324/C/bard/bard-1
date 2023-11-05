@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool is_equal(const string& s1, const string& s2) {
+  return s1 == s2;
+}
+
+bool is_insertion(const string& s1, const string& s2) {
+  if (s1.length() + 1 != s2.length()) {
+    return false;
+  }
+
+  for (int i = 0; i < s1.length(); i++) {
+    if (s1[i] != s2[i] && s1[i] != s2[i + 1]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool is_deletion(const string& s1, const string& s2) {
+  if (s1.length() - 1 != s2.length()) {
+    return false;
+  }
+
+  for (int i = 0; i < s2.length(); i++) {
+    if (s1[i] != s2[i] && s1[i + 1] != s2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool is_change(const string& s1, const string& s2) {
+  if (s1.length() != s2.length()) {
+    return false;
+  }
+
+  int diff_count = 0;
+  for (int i = 0; i < s1.length(); i++) {
+    if (s1[i] != s2[i]) {
+      diff_count++;
+    }
+  }
+
+  return diff_count == 1;
+}
+
+int main() {
+  int n;
+  string t_prime;
+  cin >> n >> t_prime;
+
+  vector<string> strings(n);
+  for (int i = 0; i < n; i++) {
+    cin >> strings[i];
+  }
+
+  vector<int> indices;
+  for (int i = 0; i < n; i++) {
+    if (is_equal(strings[i], t_prime) || is_insertion(strings[i], t_prime) ||
+        is_deletion(strings[i], t_prime) || is_change(strings[i], t_prime)) {
+      indices.push_back(i + 1);
+    }
+  }
+
+  sort(indices.begin(), indices.end());
+
+  cout << indices.size() << endl;
+  for (int index : indices) {
+    cout << index << " ";
+  }
+  cout << endl;
+
+  return 0;
+}

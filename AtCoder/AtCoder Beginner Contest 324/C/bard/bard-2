@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool is_valid_string(const string& s, const string& t) {
+  // Check if s is equal to t.
+  if (s == t) {
+    return true;
+  }
+
+  // Check if s is obtained by inserting one lowercase English letter at
+  // one position in t.
+  for (int i = 0; i <= t.length(); i++) {
+    string tmp_s = s.substr(0, i) + t[i] + s.substr(i);
+    if (tmp_s == t) {
+      return true;
+    }
+  }
+
+  // Check if s is obtained by deleting one character from t.
+  for (int i = 0; i < t.length(); i++) {
+    string tmp_s = s;
+    tmp_s.erase(i, 1);
+    if (tmp_s == t) {
+      return true;
+    }
+  }
+
+  // Check if s is obtained by changing one character in t to another
+  // lowercase English letter.
+  for (int i = 0; i < t.length(); i++) {
+    for (char c = 'a'; c <= 'z'; c++) {
+      if (c != t[i]) {
+        string tmp_s = s;
+        tmp_s[i] = c;
+        if (tmp_s == t) {
+          return true;
+        }
+      }
+    }
+  }
+
+  // If none of the above conditions hold, then s cannot be equal to t.
+  return false;
+}
+
+int main() {
+  int n;
+  string t_prime;
+  cin >> n >> t_prime;
+
+  vector<string> s(n);
+  for (int i = 0; i < n; i++) {
+    cin >> s[i];
+  }
+
+  // Find all the strings among S1,S2,…,SN that could equal the string T
+  // sent by Takahashi.
+  vector<int> valid_indices;
+  for (int i = 0; i < n; i++) {
+    if (is_valid_string(s[i], t_prime)) {
+      valid_indices.push_back(i + 1);
+    }
+  }
+
+  // Print the number of valid strings and the sequence of indices of the
+  // valid strings.
+  cout << valid_indices.size() << endl;
+  for (int i = 0; i < valid_indices.size(); i++) {
+    cout << valid_indices[i] << " ";
+  }
+  cout << endl;
+
+  return 0;
+}

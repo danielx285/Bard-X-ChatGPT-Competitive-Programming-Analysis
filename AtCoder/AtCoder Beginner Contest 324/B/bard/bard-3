@@ -1,0 +1,23 @@
+#include <iostream>
+
+using namespace std;
+
+bool isDivisibleBy2And3(int n) {
+  if (n % 2 != 0 || n % 3 != 0) {
+    return false;
+  }
+  return true;
+}
+
+int main() {
+  int n;
+  cin >> n;
+
+  if (isDivisibleBy2And3(n)) {
+    cout << "Yes" << endl;
+  } else {
+    cout << "No" << endl;
+  }
+
+  return 0;
+}

@@ -1,0 +1,27 @@
+#include <iostream>
+
+int main() {
+  int n;
+  std::cin >> n;
+
+  int a[n];
+  for (int i = 0; i < n; i++) {
+    std::cin >> a[i];
+  }
+
+  bool all_equal = true;
+  for (int i = 1; i < n; i++) {
+    if (a[i] != a[0]) {
+      all_equal = false;
+      break;
+    }
+  }
+
+  if (all_equal) {
+    std::cout << "Yes" << std::endl;
+  } else {
+    std::cout << "No" << std::endl;
+  }
+
+  return 0;
+}

@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+bool isDivisibleByTwoAndThree(long long n) {
+  // Check if the number is divisible by 2.
+  if (n % 2 != 0) {
+    return false;
+  }
+
+  // Check if the sum of the digits of the number is divisible by 3.
+  long long sumOfDigits = 0;
+  while (n > 0) {
+    sumOfDigits += n % 10;
+    n /= 10;
+  }
+  if (sumOfDigits % 3 != 0) {
+    return false;
+  }
+
+  return true;
+}
+
+int main() {
+  long long n;
+  cin >> n;
+
+  if (isDivisibleByTwoAndThree(n)) {
+    cout << "Yes" << endl;
+  } else {
+    cout << "No" << endl;
+  }
+
+  return 0;
+}
