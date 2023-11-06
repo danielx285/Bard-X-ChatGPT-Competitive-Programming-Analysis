@@ -1,0 +1,36 @@
+Implement a C++ code that solves the following question:
+
+Alice and Bob are playing a game. They have two positive integers X and Y.
+
+In one operation:
+First Alice would replace exactly one of the numbers with the gcd of current numbers. In words, she would select either X or Y and replace it with gcd(X,Y).
+Then Bob would replace exactly one of the numbers with the lcm of current numbers.
+
+Find the minimum sum of numbers they can achieve after K number of operations.
+
+Input Format
+The first line of input will contain a single integer T, denoting the number of test cases.
+Each test case consists of three space-separated integers X,Y, and K — denoting the initial numbers and the number of operations.
+
+Output Format
+For each test case, output on a new line, the minimum sum of numbers they can achieve after K operations.
+
+Constraints
+1≤T≤10 
+1≤X,Y,K≤10^5
+
+Sample 1:
+Input
+3
+4 2 1
+1 5 2
+4 4 10
+Output
+4
+2
+8
+
+Explanation:
+Test case 1: Alice will replace 4 by the gcd, which is 2. The numbers become 2 and 2. Then, Bob will replace 2 with the lcm, which is 2. Thus, the final sum is 4.
+
+Test case 3: Since both numbers are equal, both gcd and lcm would be 4. Thus, the sum of two numbers after all operations remains same, i.e., 8.
