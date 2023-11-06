@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Function to check if a cell contains a sensor
+bool isSensor(char cell) {
+    return (cell == '#');
+}
+
+// Function to perform Depth-First Search (DFS) to group adjacent sensors into one cluster
+void dfs(int x, int y, vector<string>& grid, vector<vector<bool>>& visited) {
+    if (x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size() || !isSensor(grid[x][y]) || visited[x][y]) {
+        return;
+    }
+
+    visited[x][y] = true;
+
+    // Visit horizontally, vertically, and diagonally adjacent cells
+    dfs(x - 1, y, grid, visited); // Up
+    dfs(x + 1, y, grid, visited); // Down
+    dfs(x, y - 1, grid, visited); // Left
+    dfs(x, y + 1, grid, visited); // Right
+    dfs(x - 1, y - 1, grid, visited); // Up-Left
+    dfs(x - 1, y + 1, grid, visited); // Up-Right
+    dfs(x + 1, y - 1, grid, visited); // Down-Left
+    dfs(x + 1, y + 1, grid, visited); // Down-Right
+}
+
+int countSensors(vector<string>& grid) {
+    int H = grid.size();
+    int W = grid[0].size();
+
+    vector<vector<bool>> visited(H, vector<bool>(W, false));
+    int sensorCount = 0;
+
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
+            if (isSensor(grid[i][j]) && !visited[i][j]) {
+                // If the cell contains a sensor and has not been visited yet, start a new cluster
+                dfs(i, j, grid, visited);
+                sensorCount++;
+            }
+        }
+    }
+
+    return sensorCount;
+}
+
+int main() {
+    int H, W;
+    cin >> H >> W;
+
+    vector<string> grid(H);
+    for (int i = 0; i < H; i++) {
+        cin >> grid[i];
+    }
+
+    int result = countSensors(grid);
+    cout << result << endl;
+
+    return 0;
+}

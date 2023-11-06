@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+
+struct Product {
+  ll t, d;
+  bool operator<(const Product& other) const { return t < other.t; }
+};
+
+int main() {
+  int n;
+  cin >> n;
+
+  vector<Product> products(n);
+  for (int i = 0; i < n; i++) {
+    cin >> products[i].t >> products[i].d;
+  }
+
+  sort(products.begin(), products.end());
+
+  int ans = 0;
+  ll last_print_time = -1;
+  for (const Product& product : products) {
+    if (last_print_time + 1 <= product.t) {
+      last_print_time = product.t + product.d;
+      ans++;
+    }
+  }
+
+  cout << ans << endl;
+
+  return 0;
+}

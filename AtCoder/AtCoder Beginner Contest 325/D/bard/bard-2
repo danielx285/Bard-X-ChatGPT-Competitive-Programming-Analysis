@@ -1,0 +1,38 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Product {
+  int t, d;
+};
+
+bool compareProducts(const Product& a, const Product& b) {
+  return a.t < b.t;
+}
+
+int main() {
+  int n;
+  cin >> n;
+
+  vector<Product> products(n);
+  for (int i = 0; i < n; i++) {
+    cin >> products[i].t >> products[i].d;
+  }
+
+  sort(products.begin(), products.end(), compareProducts);
+
+  int max_products = 0;
+  int current_time = 0;
+  for (const Product& product : products) {
+    if (current_time + 1 <= product.t) {
+      current_time = product.t + product.d;
+      max_products++;
+    }
+  }
+
+  cout << max_products << endl;
+
+  return 0;
+}

@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <utility>
+#include <queue>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<pair<long long, long long>> products;
+
+    for (int i = 0; i < n; i++) {
+        long long t, d;
+        cin >> t >> d;
+        products.push_back({t, t + d});
+    }
+
+    sort(products.begin(), products.end());
+
+    long long currentTime = 0;
+    priority_queue<long long, vector<long long>, greater<long long>> availableTimes;
+
+    int maxPrinted = 0;
+
+    for (int i = 0; i < n; i++) {
+        long long startTime = products[i].first;
+        long long endTime = products[i].second;
+
+        if (availableTimes.empty() || availableTimes.top() > startTime) {
+            availableTimes.push(endTime);
+            maxPrinted++;
+        } else {
+            availableTimes.pop();
+            availableTimes.push(endTime);
+        }
+    }
+
+    cout << maxPrinted << endl;
+    
+    return 0;
+}

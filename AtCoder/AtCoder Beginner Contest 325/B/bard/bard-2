@@ -1,0 +1,57 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Base {
+  int W;
+  int X;
+};
+
+bool can_attend(const Base& base, int start, int end) {
+  return base.X + start >= 9 && base.X + end <= 18;
+}
+
+int max_participants(const vector<Base>& bases) {
+  // Sort the bases by their X values in ascending order.
+  sort(bases.begin(), bases.end(), [](const Base& a, const Base& b) {
+    return a.X < b.X;
+  });
+
+  // Initialize the maximum number of participants.
+  int max_participants = 0;
+
+  // Iterate over all possible meeting start times.
+  for (int start = 9; start <= 17; start++) {
+    // Calculate the meeting end time.
+    int end = start + 1;
+
+    // Count the number of employees who can attend the meeting.
+    int participants = 0;
+    for (const Base& base : bases) {
+      if (can_attend(base, start, end)) {
+        participants += base.W;
+      }
+    }
+
+    // Update the maximum number of participants if necessary.
+    max_participants = max(max_participants, participants);
+  }
+
+  return max_participants;
+}
+
+int main() {
+  int N;
+  cin >> N;
+
+  vector<Base> bases(N);
+  for (int i = 0; i < N; i++) {
+    cin >> bases[i].W >> bases[i].X;
+  }
+
+  cout << max_participants(bases) << endl;
+
+  return 0;
+}

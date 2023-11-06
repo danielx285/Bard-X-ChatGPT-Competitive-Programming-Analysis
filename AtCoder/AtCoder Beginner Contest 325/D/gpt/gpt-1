@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<pair<long long, long long>> products(N);
+    
+    for (int i = 0; i < N; i++) {
+        cin >> products[i].first >> products[i].second;
+    }
+    
+    sort(products.begin(), products.end());
+    
+    long long time = 0;
+    int maxPrints = 0;
+    
+    for (int i = 0; i < N; i++) {
+        if (time <= products[i].first) {
+            time = products[i].first;
+        } else if (time <= products[i].second) {
+            time++;
+        } else {
+            continue;
+        }
+        
+        maxPrints++;
+    }
+    
+    cout << maxPrints << endl;
+    
+    return 0;
+}

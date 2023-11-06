@@ -1,0 +1,12 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string S, T;
+    std::cin >> S >> T;
+
+    // Concatenate the surname and "san" with a space in between
+    std::cout << S << " san" << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+  int h, w;
+  cin >> h >> w;
+  vector<string> grid(h);
+  for (int i = 0; i < h; i++) {
+    cin >> grid[i];
+  }
+
+  // Create a set to store the visited sensors.
+  set<pair<int, int>> visited;
+
+  // Count the number of sensors.
+  int sensor_count = 0;
+
+  // Iterate over the grid.
+  for (int i = 0; i < h; i++) {
+    for (int j = 0; j < w; j++) {
+      // If the current square contains a sensor and it has not been visited yet,
+      // perform a DFS to find all the connected sensors.
+      if (grid[i][j] == '#' && !visited.count({i, j})) {
+        sensor_count++;
+        dfs(grid, visited, i, j);
+      }
+    }
+  }
+
+  cout << sensor_count << endl;
+
+  return 0;
+}
+
+void dfs(vector<string>& grid, set<pair<int, int>>& visited, int i, int j) {
+  // Mark the current square as visited.
+  visited.insert({i, j});
+
+  // Explore the four adjacent squares.
+  for (int x = i - 1; x <= i + 1; x++) {
+    for (int y = j - 1; y <= j + 1; y++) {
+      // If the adjacent square is within the bounds of the grid and contains a sensor,
+      // and it has not been visited yet, perform a DFS on that square.
+      if (0 <= x && x < grid.size() && 0 <= y && y < grid[0].size() && grid[x][y] == '#' && !visited.count({x, y})) {
+        dfs(grid, visited, x, y);
+      }
+    }
+  }
+}

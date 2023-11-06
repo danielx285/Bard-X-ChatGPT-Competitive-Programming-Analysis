@@ -1,0 +1,12 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string S, T;
+    std::cin >> S >> T;
+
+    // Add " san" to the first name and print the result
+    std::cout << S << " " << T << " san" << std::endl;
+
+    return 0;
+}

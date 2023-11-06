@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int MAX_H = 1000;
+const int MAX_W = 1000;
+
+bool grid[MAX_H][MAX_W];
+
+// Checks if the sensor at (i, j) is interacting with the sensor at (k, l).
+bool isInteracting(int i, int j, int k, int l) {
+  return abs(i - k) <= 1 && abs(j - l) <= 1;
+}
+
+// Finds the number of sensors on the grid.
+int countSensors(int H, int W) {
+  int count = 0;
+
+  // Mark all sensors as visited.
+  vector<vector<bool>> visited(H, vector<bool>(W, false));
+
+  // Recursively count the sensors.
+  for (int i = 0; i < H; i++) {
+    for (int j = 0; j < W; j++) {
+      if (!visited[i][j] && grid[i][j]) {
+        count++;
+        DFS(i, j, visited);
+      }
+    }
+  }
+
+  return count;
+}
+
+// Recursively counts the sensors that are interacting with the sensor at (i, j).
+void DFS(int i, int j, vector<vector<bool>>& visited) {
+  visited[i][j] = true;
+
+  for (int k = i - 1; k <= i + 1; k++) {
+    for (int l = j - 1; l <= j + 1; l++) {
+      if (0 <= k && k < H && 0 <= l && l < W && isInteracting(i, j, k, l) && !visited[k][l]) {
+        DFS(k, l, visited);
+      }
+    }
+  }
+}
+
+int main() {
+  int H, W;
+  cin >> H >> W;
+
+  for (int i = 0; i < H; i++) {
+    string S;
+    cin >> S;
+
+    for (int j = 0; j < W; j++) {
+      grid[i][j] = S[j] == '#';
+    }
+  }
+
+  int count = countSensors(H, W);
+
+  cout << count << endl;
+
+  return 0;
+}

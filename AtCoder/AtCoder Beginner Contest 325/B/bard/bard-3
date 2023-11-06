@@ -1,0 +1,51 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+struct Base {
+  int w;
+  int x;
+};
+
+int main() {
+  int n;
+  cin >> n;
+
+  Base bases[n];
+  for (int i = 0; i < n; i++) {
+    cin >> bases[i].w >> bases[i].x;
+  }
+
+  // Sort the bases by their start time.
+  sort(bases, bases + n, [](const Base& a, const Base& b) { return a.x < b.x; });
+
+  // Find the maximum number of employees who can participate in the meeting.
+  int max_employees = 0;
+  int current_employees = 0;
+  int current_time = 9;
+  for (int i = 0; i < n; i++) {
+    // If the current time is within the 9:00-18:00 time slot at the current base,
+    // then all employees at the current base can participate in the meeting.
+    if (current_time >= bases[i].x && current_time < bases[i].x + 9) {
+      current_employees += bases[i].w;
+    } else {
+      // Otherwise, the maximum number of employees who can participate in the
+      // meeting is the current number of employees.
+      max_employees = max(max_employees, current_employees);
+
+      // Update the current time.
+      current_time = bases[i].x;
+    }
+  }
+
+  // If the current time is within the 9:00-18:00 time slot at the last base, then
+  // all employees at the last base can participate in the meeting.
+  if (current_time >= bases[n - 1].x && current_time < bases[n - 1].x + 9) {
+    max_employees = max(max_employees, current_employees + bases[n - 1].w);
+  }
+
+  cout << max_employees << endl;
+
+  return 0;
+}

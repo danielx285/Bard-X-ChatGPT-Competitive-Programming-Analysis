@@ -1,0 +1,36 @@
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Product {
+  int arrival_time;
+  int departure_time;
+};
+
+int main() {
+  int n;
+  cin >> n;
+
+  vector<Product> products(n);
+  for (int i = 0; i < n; i++) {
+    cin >> products[i].arrival_time >> products[i].departure_time;
+  }
+
+  sort(products.begin(), products.end(), [](const Product& a, const Product& b) {
+    return a.arrival_time < b.arrival_time;
+  });
+
+  vector<int> printed_products;
+  int current_time = 0;
+  for (const Product& product : products) {
+    if (current_time >= product.arrival_time) {
+      printed_products.push_back(product.departure_time);
+      current_time = max(current_time, product.departure_time) + 1;
+    }
+  }
+
+  cout << printed_products.size() << endl;
+  return 0;
+}

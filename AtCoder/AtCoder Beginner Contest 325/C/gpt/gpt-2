@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int H, W;
+vector<string> grid;
+vector<vector<bool>> visited;
+
+// Define the four possible directions to check for adjacent sensors
+const int dx[] = {1, -1, 0, 0, 1, 1, -1, -1};
+const int dy[] = {0, 0, 1, -1, 1, -1, 1, -1};
+
+bool isValid(int x, int y) {
+    return (x >= 0 && x < H && y >= 0 && y < W);
+}
+
+void dfs(int x, int y) {
+    visited[x][y] = true;
+
+    for (int d = 0; d < 8; d++) {
+        int nx = x + dx[d];
+        int ny = y + dy[d];
+        
+        if (isValid(nx, ny) && !visited[nx][ny] && grid[nx][ny] == '#') {
+            dfs(nx, ny);
+        }
+    }
+}
+
+int countSensors() {
+    int count = 0;
+
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
+            if (grid[i][j] == '#' && !visited[i][j]) {
+                count++;
+                dfs(i, j);
+            }
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    cin >> H >> W;
+    grid.resize(H);
+    visited.assign(H, vector<bool>(W, false));
+
+    for (int i = 0; i < H; i++) {
+        cin >> grid[i];
+    }
+
+    int result = countSensors();
+    cout << result << endl;
+
+    return 0;
+}

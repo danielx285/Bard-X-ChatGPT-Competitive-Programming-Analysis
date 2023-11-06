@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Product {
+    long long enter;
+    long long leave;
+};
+
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<Product> products(N);
+    
+    for (int i = 0; i < N; ++i) {
+        cin >> products[i].enter >> products[i].leave;
+    }
+    
+    vector<long long> times;
+    
+    for (int i = 0; i < N; ++i) {
+        times.push_back(products[i].enter);
+        times.push_back(products[i].leave);
+    }
+    
+    sort(times.begin(), times.end());
+    
+    int maxPrints = 0;
+    int prints = 0;
+    
+    for (int i = 0; i < times.size(); ++i) {
+        if (i > 0 && times[i] == times[i - 1]) {
+            continue;
+        }
+        long long currentTime = times[i];
+        int remainingCharge = 0;
+        
+        for (int j = 0; j < N; ++j) {
+            if (products[j].enter <= currentTime && currentTime <= products[j].leave) {
+                if (remainingCharge == 0) {
+                    prints++;
+                    remainingCharge = 1;
+                } else {
+                    remainingCharge--;
+                }
+            }
+        }
+        
+        maxPrints = max(maxPrints, prints);
+    }
+    
+    cout << maxPrints << endl;
+    
+    return 0;
+}

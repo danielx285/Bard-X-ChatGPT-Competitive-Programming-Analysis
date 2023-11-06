@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+
+    vector<pair<int, int>> bases; // A vector to store pairs of (Wi, Xi)
+
+    for (int i = 0; i < N; ++i) {
+        int W, X;
+        cin >> W >> X;
+        bases.push_back({W, X});
+    }
+
+    int maxEmployees = 0;
+
+    // Iterate through all possible meeting times from 0 to 23 UTC.
+    for (int meetingTime = 0; meetingTime < 24; ++meetingTime) {
+        int employeesAvailable = 0;
+
+        for (int i = 0; i < N; ++i) {
+            // Calculate the local time at each base for the current meetingTime.
+            int localTime = (meetingTime - bases[i].second + 24) % 24;
+
+            if (localTime >= 9 && localTime <= 18) {
+                employeesAvailable += bases[i].first;
+            }
+        }
+
+        maxEmployees = max(maxEmployees, employeesAvailable);
+    }
+
+    cout << maxEmployees << endl;
+
+    return 0;
+}

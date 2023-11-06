@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Base {
+    int employees;
+    int offset;
+};
+
+bool canAttendMeeting(const Base& base, int start, int end) {
+    int baseStartTime = (start - base.offset + 24) % 24;
+    int baseEndTime = (end - base.offset + 24) % 24;
+    return (baseStartTime >= 9 && baseStartTime <= 18) && (baseEndTime >= 9 && baseEndTime <= 18);
+}
+
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<Base> bases(N);
+    
+    for (int i = 0; i < N; ++i) {
+        cin >> bases[i].employees >> bases[i].offset;
+    }
+
+    int maxEmployees = 0;
+    
+    for (int i = 0; i < 24; ++i) {
+        int employeesAtMeetingTime = 0;
+        for (const Base& base : bases) {
+            if (canAttendMeeting(base, i, i + 1)) {
+                employeesAtMeetingTime += base.employees;
+            }
+        }
+        maxEmployees = max(maxEmployees, employeesAtMeetingTime);
+    }
+    
+    cout << maxEmployees << endl;
+    
+    return 0;
+}

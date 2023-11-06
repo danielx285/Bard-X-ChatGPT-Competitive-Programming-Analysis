@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+
+    vector<pair<int, int>> bases;
+
+    for (int i = 0; i < N; i++) {
+        int W, X;
+        cin >> W >> X;
+        bases.push_back({X, W});
+    }
+
+    sort(bases.begin(), bases.end());
+
+    int maxEmployees = 0;
+    int currentEmployees = 0;
+
+    for (int i = 0; i < N; i++) {
+        currentEmployees += bases[i].second;
+        int endTime = bases[i].first + 1;
+
+        for (int j = i + 1; j < N; j++) {
+            if (bases[j].first < endTime) {
+                currentEmployees += bases[j].second;
+                endTime = max(endTime, bases[j].first + 1);
+                i = j;
+            } else {
+                break;
+            }
+        }
+
+        maxEmployees = max(maxEmployees, currentEmployees);
+        currentEmployees = 0;
+    }
+
+    cout << maxEmployees << endl;
+
+    return 0;
+}
