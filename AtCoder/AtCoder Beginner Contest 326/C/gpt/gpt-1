@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int N, M;
+    cin >> N >> M;
+    
+    vector<int> A(N);
+    for (int i = 0; i < N; i++) {
+        cin >> A[i];
+    }
+    
+    // Sort the gifts' coordinates in ascending order
+    sort(A.begin(), A.end());
+    
+    int maxGifts = 0;
+    
+    for (int i = 0; i < N; i++) {
+        int left = A[i];
+        int right = A[i] + M;
+        
+        // Binary search for the rightmost gift within the interval [left, right)
+        int idx = upper_bound(A.begin(), A.end(), right) - A.begin();
+        
+        // Update the maximum number of gifts that can be acquired
+        maxGifts = max(maxGifts, idx - i);
+    }
+    
+    cout << maxGifts << endl;
+    
+    return 0;
+}

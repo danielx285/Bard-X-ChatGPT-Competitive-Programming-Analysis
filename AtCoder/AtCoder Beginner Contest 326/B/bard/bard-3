@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  int N;
+  cin >> N;
+
+  // Find the smallest 326-like number greater than or equal to N.
+  int smallest_326_like_number = N;
+  while (!is_326_like_number(smallest_326_like_number)) {
+    smallest_326_like_number++;
+  }
+
+  // Print the answer.
+  cout << smallest_326_like_number << endl;
+
+  return 0;
+}
+
+bool is_326_like_number(int N) {
+  // Check if the product of the hundreds and tens digits equals the ones digit.
+  return ((N / 100) * ((N / 10) % 10)) == (N % 10);
+}

@@ -1,0 +1,89 @@
+#include <iostream>
+
+using namespace std;
+
+// A struct to represent a grid cell.
+struct Cell {
+  char character;
+  bool is_filled;
+};
+
+// A function to check if a grid is filled.
+bool is_grid_filled(Cell grid[5][5]) {
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+      if (!grid[i][j].is_filled) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// A recursive function to fill a grid.
+bool fill_grid(Cell grid[5][5], int row, int col, string R, string C) {
+  // If we have reached the end of the grid, we have a solution.
+  if (row == 5) {
+    return true;
+  }
+
+  // If the current cell is already filled, we can't fill it again.
+  if (grid[row][col].is_filled) {
+    return false;
+  }
+
+  // Try to fill the current cell with each of the three characters.
+  for (char c : {'A', 'B', 'C'}) {
+    // Check if the current character satisfies all the conditions.
+    if (c == R[row] && c == C[col] &&
+        count(grid[row], grid[row] + 5, Cell{c, true}) == 1 &&
+        count(grid, grid + 5, Cell{c, true}) == 1) {
+      // If the current character satisfies all the conditions, fill the cell and
+      // call the recursive function to fill the rest of the grid.
+      grid[row][col] = Cell{c, true};
+      if (fill_grid(grid, row + 1, col, R, C)) {
+        return true;
+      }
+      // If the recursive function fails, reset the cell and try the next
+      // character.
+      grid[row][col] = Cell{' ', false};
+    }
+  }
+
+  // If we couldn't fill the current cell with any of the three characters,
+  // there is no solution.
+  return false;
+}
+
+int main() {
+  // Get the input.
+  int N;
+  string R, C;
+  cin >> N >> R >> C;
+
+  // Create a grid.
+  Cell grid[5][5];
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+      grid[i][j] = Cell{' ', false};
+    }
+  }
+
+  // Try to fill the grid.
+  bool is_possible = fill_grid(grid, 0, 0, R, C);
+
+  // Print the output.
+  if (is_possible) {
+    cout << "Yes" << endl;
+    for (int i = 0; i < 5; i++) {
+      for (int j = 0; j < 5; j++) {
+        cout << grid[i][j].character;
+      }
+      cout << endl;
+    }
+  } else {
+    cout << "No" << endl;
+  }
+
+  return 0;
+}

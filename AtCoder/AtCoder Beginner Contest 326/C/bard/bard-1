@@ -1,0 +1,40 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+  int N, M;
+  cin >> N >> M;
+
+  // Create an array to store the coordinates of the gifts.
+  int gifts[N];
+  for (int i = 0; i < N; i++) {
+    cin >> gifts[i];
+  }
+
+  // Sort the array in ascending order.
+  sort(gifts, gifts + N);
+
+  // Initialize the maximum number of gifts that can be acquired.
+  int maxGifts = 0;
+
+  // Iterate over all possible starting points for the half-open interval.
+  for (int i = 0; i + M <= N; i++) {
+    // Calculate the number of gifts that can be acquired starting at this point.
+    int numGifts = 0;
+    for (int j = i; j < i + M; j++) {
+      if (gifts[j] >= i && gifts[j] < i + M) {
+        numGifts++;
+      }
+    }
+
+    // Update the maximum number of gifts if necessary.
+    maxGifts = max(maxGifts, numGifts);
+  }
+
+  // Print the maximum number of gifts that can be acquired.
+  cout << maxGifts << endl;
+
+  return 0;
+}

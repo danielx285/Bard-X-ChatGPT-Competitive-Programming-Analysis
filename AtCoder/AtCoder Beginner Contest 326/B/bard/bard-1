@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+int findSmallest326LikeNumber(int N) {
+  // Check if N is already a 326-like number.
+  if (N % 10 == (N / 100) * (N / 10)) {
+    return N;
+  }
+
+  // Increment N until we find a 326-like number.
+  while (true) {
+    N++;
+    if (N % 10 == (N / 100) * (N / 10)) {
+      return N;
+    }
+  }
+}
+
+int main() {
+  int N;
+  cin >> N;
+
+  int smallest326LikeNumber = findSmallest326LikeNumber(N);
+
+  cout << smallest326LikeNumber << endl;
+
+  return 0;
+}

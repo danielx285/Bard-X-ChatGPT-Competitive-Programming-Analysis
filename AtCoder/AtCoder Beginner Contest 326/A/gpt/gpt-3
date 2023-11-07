@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int X, Y;
+    cin >> X >> Y;
+
+    if (abs(X - Y) <= 2 || (X > Y && (X - Y) % 3 == 0)) {
+        cout << "Yes" << endl;
+    } else {
+        cout << "No" << endl;
+    }
+
+    return 0;
+}

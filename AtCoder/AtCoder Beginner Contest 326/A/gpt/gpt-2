@@ -1,0 +1,23 @@
+#include <iostream>
+
+int main() {
+    int X, Y;
+    std::cin >> X >> Y;
+
+    // Check if Takahashi should use stairs or elevator
+    if (X < Y) {
+        if (Y - X <= 2) {
+            std::cout << "Yes\n";  // Use stairs
+        } else {
+            std::cout << "No\n";   // Use elevator
+        }
+    } else {
+        if (X - Y <= 3) {
+            std::cout << "Yes\n";  // Use stairs
+        } else {
+            std::cout << "No\n";   // Use elevator
+        }
+    }
+
+    return 0;
+}

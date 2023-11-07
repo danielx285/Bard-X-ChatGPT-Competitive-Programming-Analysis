@@ -1,0 +1,19 @@
+#include <iostream>
+
+int main() {
+    int N;
+    std::cin >> N;
+    
+    for (int i = N; i < 1000; i++) {
+        int hundreds = i / 100;
+        int tens = (i / 10) % 10;
+        int ones = i % 10;
+        
+        if (hundreds * tens == ones) {
+            std::cout << i << std::endl;
+            break;
+        }
+    }
+    
+    return 0;
+}

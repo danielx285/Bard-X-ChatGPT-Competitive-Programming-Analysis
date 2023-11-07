@@ -1,0 +1,18 @@
+#include <iostream>
+
+int main() {
+    int X, Y;
+    std::cin >> X >> Y;
+
+    // Calculate the absolute difference between X and Y
+    int diff = std::abs(X - Y);
+
+    // Check if Takahashi can use the stairs
+    if (diff <= 2 || (X < Y && diff % 2 == 0) || (X > Y && diff % 3 == 0)) {
+        std::cout << "Yes" << std::endl;
+    } else {
+        std::cout << "No" << std::endl;
+    }
+
+    return 0;
+}

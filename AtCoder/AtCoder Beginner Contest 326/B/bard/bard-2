@@ -1,0 +1,25 @@
+#include <iostream>
+
+using namespace std;
+
+int find_smallest_326_like_number(int N) {
+  int smallest_326_like_number = N;
+  while (!is_326_like_number(smallest_326_like_number)) {
+    smallest_326_like_number++;
+  }
+  return smallest_326_like_number;
+}
+
+bool is_326_like_number(int N) {
+  int hundreds_digit = N / 100;
+  int tens_digit = (N % 100) / 10;
+  int ones_digit = N % 10;
+  return hundreds_digit * tens_digit == ones_digit;
+}
+
+int main() {
+  int N;
+  cin >> N;
+  cout << find_smallest_326_like_number(N) << endl;
+  return 0;
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int N, M;
+    cin >> N >> M;
+
+    vector<int> A(N);
+    for (int i = 0; i < N; i++) {
+        cin >> A[i];
+    }
+
+    // Sort the gift coordinates in ascending order.
+    sort(A.begin(), A.end());
+
+    int maxGifts = 0;
+    for (int i = 0; i < N; i++) {
+        // Find the maximum number of gifts that can be acquired starting from coordinate A[i].
+        int j = i;
+        while (j < N && A[j] < A[i] + M) {
+            j++;
+        }
+        maxGifts = max(maxGifts, j - i);
+    }
+
+    cout << maxGifts << endl;
+    return 0;
+}

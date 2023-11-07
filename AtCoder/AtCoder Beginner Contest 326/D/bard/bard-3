@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+typedef vector<vector<char>> Grid;
+
+bool isPossible(int N, string R, string C, Grid& grid) {
+  // Check if the input is valid.
+  if (N < 3 || N > 5) {
+    return false;
+  }
+  if (R.length() != N || C.length() != N) {
+    return false;
+  }
+  for (int i = 0; i < N; ++i) {
+    if (R[i] != 'A' && R[i] != 'B' && R[i] != 'C') {
+      return false;
+    }
+    if (C[i] != 'A' && C[i] != 'B' && C[i] != 'C') {
+      return false;
+    }
+  }
+
+  // Initialize the grid.
+  grid.resize(N);
+  for (int i = 0; i < N; ++i) {
+    grid[i].resize(N, '.');
+  }
+
+  // Write the characters in the first row and column.
+  for (int i = 0; i < N; ++i) {
+    grid[0][i] = R[i];
+    grid[i][0] = C[i];
+  }
+
+  // Fill the rest of the grid.
+  for (int i = 1; i < N; ++i) {
+    for (int j = 1; j < N; ++j) {
+      // There are three possible characters that can be written in this cell.
+      // Check which one can be written without violating the conditions of the problem.
+      for (char c = 'A'; c <= 'C'; ++c) {
+        // Check if the character c can be written in the cell without violating the conditions.
+        bool valid = true;
+        for (int k = 0; k < N; ++k) {
+          if (grid[i][k] == c || grid[k][j] == c) {
+            valid = false;
+            break;
+          }
+        }
+
+        if (valid) {
+          grid[i][j] = c;
+          break;
+        }
+      }
+
+      // If no character can be written in the cell, then there is no solution.
+      if (grid[i][j] == '.') {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+int main() {
+  int N;
+  cin >> N;
+  string R, C;
+  cin >> R >> C;
+
+  Grid grid;
+  bool possible = isPossible(N, R, C, grid);
+
+  if (possible) {
+    cout << "Yes" << endl;
+    for (int i = 0; i < N; ++i) {
+      cout << grid[i] << endl;
+    }
+  } else {
+    cout << "No" << endl;
+  }
+
+  return 0;
+}

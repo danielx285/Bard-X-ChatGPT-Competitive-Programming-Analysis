@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    string R, C;
+    cin >> R >> C;
+
+    vector<vector<char>> grid(N, vector<char>(N, '.'));
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (R[i] == 'A' && C[j] == 'A') {
+                grid[i][j] = 'A';
+                R[i] = 'X';  // Mark R[i] as used
+                C[j] = 'X';  // Mark C[j] as used
+            } else if (R[i] == 'B' && C[j] == 'B') {
+                grid[i][j] = 'B';
+                R[i] = 'X';  // Mark R[i] as used
+                C[j] = 'X';  // Mark C[j] as used
+            } else if (R[i] == 'C' && C[j] == 'C') {
+                grid[i][j] = 'C';
+                R[i] = 'X';  // Mark R[i] as used
+                C[j] = 'X';  // Mark C[j] as used
+            }
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (grid[i][j] == '.') {
+                for (char ch : "ABC") {
+                    if (R[i] == '.' && C[j] == '.') {
+                        grid[i][j] = ch;
+                        R[i] = C[j] = 'X';  // Mark R[i] and C[j] as used
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        if (R[i] != 'X' || C[i] != 'X') {
+            cout << "No" << endl;
+            return 0;
+        }
+    }
+
+    cout << "Yes" << endl;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cout << grid[i][j];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

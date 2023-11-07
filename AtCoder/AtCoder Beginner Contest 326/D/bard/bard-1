@@ -1,0 +1,104 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Represents a cell in the grid.
+struct Cell {
+  char character = '.';
+};
+
+// Represents the grid.
+vector<vector<Cell>> grid;
+
+// Checks if it is possible to fill the grid to satisfy the given conditions.
+bool isPossible() {
+  // Check if each row and column contains exactly one A, one B, and one C.
+  for (int i = 0; i < grid.size(); i++) {
+    int count_a = 0, count_b = 0, count_c = 0;
+    for (int j = 0; j < grid[i].size(); j++) {
+      if (grid[i][j].character == 'A') {
+        count_a++;
+      } else if (grid[i][j].character == 'B') {
+        count_b++;
+      } else if (grid[i][j].character == 'C') {
+        count_c++;
+      }
+    }
+    if (count_a != 1 || count_b != 1 || count_c != 1) {
+      return false;
+    }
+  }
+
+  // Check if the leftmost character written in the i-th row matches the i-th
+  // character of R.
+  for (int i = 0; i < grid.size(); i++) {
+    if (grid[i][0].character != R[i]) {
+      return false;
+    }
+  }
+
+  // Check if the topmost character written in the i-th column matches the i-th
+  // character of C.
+  for (int i = 0; i < grid[0].size(); i++) {
+    if (grid[0][i].character != C[i]) {
+      return false;
+    }
+  }
+
+  // If all the checks pass, then it is possible to fill the grid to satisfy the
+  // given conditions.
+  return true;
+}
+
+// Fills the grid to satisfy the given conditions.
+void fillGrid() {
+  // Initialize the grid.
+  for (int i = 0; i < grid.size(); i++) {
+    for (int j = 0; j < grid[i].size(); j++) {
+      grid[i][j].character = '.';
+    }
+  }
+
+  // Fill the first row of the grid.
+  for (int j = 0; j < grid[0].size(); j++) {
+    if (C[j] == 'A') {
+      grid[0][j].character = 'A';
+    } else if (C[j] == 'B') {
+      grid[0][j].character = 'B';
+    } else {
+      grid[0][j].character = 'C';
+    }
+  }
+
+  // Fill the first column of the grid.
+  for (int i = 0; i < grid.size(); i++) {
+    if (R[i] == 'A') {
+      grid[i][0].character = 'A';
+    } else if (R[i] == 'B') {
+      grid[i][0].character = 'B';
+    } else {
+      grid[i][0].character = 'C';
+    }
+  }
+
+  // Fill the remaining cells of the grid.
+  for (int i = 1; i < grid.size(); i++) {
+    for (int j = 1; j < grid[i].size(); j++) {
+      // If the cell is empty, then fill it with the character that is not
+      // already present in the row and column.
+      if (grid[i][j].character == '.') {
+        char character = 'A';
+        while (count(grid[i].begin(), grid[i].end(), character) > 0 ||
+               count(grid[0][j].begin(), grid[0][j].end(), character) > 0) {
+          character++;
+        }
+        grid[i][j].character = character;
+      }
+    }
+  }
+}
+
+// Prints the grid.
+void printGrid() {
+  for (int i

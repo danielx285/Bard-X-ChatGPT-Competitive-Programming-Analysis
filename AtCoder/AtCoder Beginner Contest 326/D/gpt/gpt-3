@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N;
+    cin >> N;
+    string R, C;
+    cin >> R >> C;
+
+    vector<vector<char>> grid(N, vector<char>(N, '.'));
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (R[i] == 'A' && C[j] == 'A') {
+                if (grid[i][j] == '.') grid[i][j] = 'A';
+                else {
+                    cout << "No" << endl;
+                    return 0;
+                }
+            } else if (R[i] == 'B' && C[j] == 'B') {
+                if (grid[i][j] == '.') grid[i][j] = 'B';
+                else {
+                    cout << "No" << endl;
+                    return 0;
+                }
+            } else if (R[i] == 'C' && C[j] == 'C') {
+                if (grid[i][j] == '.') grid[i][j] = 'C';
+                else {
+                    cout << "No" << endl;
+                    return 0;
+                }
+            }
+        }
+    }
+
+    // Check rows and columns
+    for (int i = 0; i < N; i++) {
+        int countA = 0, countB = 0, countC = 0;
+        for (int j = 0; j < N; j++) {
+            if (grid[i][j] == 'A') countA++;
+            if (grid[i][j] == 'B') countB++;
+            if (grid[i][j] == 'C') countC++;
+        }
+        if (countA != 1 || countB != 1 || countC != 1) {
+            cout << "No" << endl;
+            return 0;
+        }
+        countA = 0, countB = 0, countC = 0;
+        for (int j = 0; j < N; j++) {
+            if (grid[j][i] == 'A') countA++;
+            if (grid[j][i] == 'B') countB++;
+            if (grid[j][i] == 'C') countC++;
+        }
+        if (countA != 1 || countB != 1 || countC != 1) {
+            cout << "No" << endl;
+            return 0;
+        }
+    }
+
+    cout << "Yes" << endl;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cout << grid[i][j];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
